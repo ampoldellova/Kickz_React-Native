@@ -26,7 +26,7 @@ const StackNavigator = () => {
                         headerShown: false,
                         tabBarIcon: ({ focused }) =>
                             focused ? (
-                                <Entypo name="home" size={24} color="#008E97" />
+                                <Entypo name="home" size={24} color="#0F0F0F" />
                             ) : (
                                 <AntDesign name="home" size={24} color="black" />
                             ),
@@ -42,7 +42,7 @@ const StackNavigator = () => {
                         headerShown: false,
                         tabBarIcon: ({ focused }) =>
                             focused ? (
-                                <FontAwesome name="user-circle" size={24} color="#008E97" />
+                                <FontAwesome name="user-circle" size={24} color="#0F0F0F" />
                             ) : (
                                 <FontAwesome name="user-circle-o" size={24} color="black" />
                             ),
@@ -58,7 +58,7 @@ const StackNavigator = () => {
                         headerShown: false,
                         tabBarIcon: ({ focused }) =>
                             focused ? (
-                                <Ionicons name="cart-sharp" size={24} color="#008E97" />
+                                <Ionicons name="cart-sharp" size={24} color="#0F0F0F" />
                             ) : (
                                 <Ionicons name="cart-outline" size={24} color="black" />
                             ),
