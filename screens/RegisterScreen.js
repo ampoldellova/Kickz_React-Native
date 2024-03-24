@@ -1,15 +1,40 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, KeyboardAvoidingView, TextInput, Pressable, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const RegisterScreen = () => {
-    const { name, setName } = useState("");
-    const { email, setEmail } = useState("");
-    const { password, setPassword } = useState("");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const navigation = useNavigation();
+
+    const handleRegister = () => {
+        const user = {
+            name: name,
+            email: email,
+            password: password,
+        };
+
+        //send a post request to the backend API
+        axios.post("http://192.168.254.101:8000/register", user).then((response) => {
+            // console.log(response);
+            setName("");
+            setPassword("");
+            setEmail("");
+            Alert.alert(
+                "Registration Successfull",
+                "You have registered successfully"
+            );
+        }).catch((error) => {
+            Alert.alert("Registration Error", "An error occurred during registration");
+            console.log("Registration Failed", error);
+        })
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}>
             <View>
@@ -84,6 +109,7 @@ const RegisterScreen = () => {
                 <View style={{ marginTop: 50 }} />
 
                 <Pressable
+                    onPress={handleRegister}
                     style={{
                         width: 200,
                         backgroundColor: "#0F0F0F",
