@@ -18,7 +18,7 @@ const LoginScreen = () => {
         }
 
         axios.post("http://192.168.254.101:8000/login", user).then((response) => {
-            console.log(response);
+            // console.log(response);
             const token = response.data.token;
             AsyncStorage.setItem("authToken", token);
             navigation.replace("Home");
