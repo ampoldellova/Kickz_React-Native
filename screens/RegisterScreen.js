@@ -5,6 +5,7 @@ import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import baseurl from '../assets/common/baseurl';
 
 const RegisterScreen = () => {
     const [name, setName] = useState("");
@@ -20,7 +21,7 @@ const RegisterScreen = () => {
         };
 
         //send a post request to the backend API
-        axios.post("http://192.168.254.101:8000/register", user).then((response) => {
+        axios.post(`${baseurl}register`, user).then((response) => {
             // console.log(response);
             setName("");
             setPassword("");

@@ -5,6 +5,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import baseurl from '../assets/common/baseurl';
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ const LoginScreen = () => {
             password: password
         }
 
-        axios.post("http://192.168.254.101:8000/login", user).then((response) => {
+        axios.post(`${baseurl}login`, user).then((response) => {
             // console.log(response);
             const token = response.data.token;
             AsyncStorage.setItem("authToken", token);
