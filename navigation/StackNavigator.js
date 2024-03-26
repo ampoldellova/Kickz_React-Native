@@ -10,6 +10,7 @@ import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -35,7 +36,7 @@ const StackNavigator = () => {
 
                 <Tab.Screen
                     name="Profile"
-                    component={HomeScreen}
+                    component={ProfileScreen}
                     options={{
                         tabBarLabel: "Profile",
                         tabBarLabelStyle: { color: "black" },
@@ -73,6 +74,7 @@ const StackNavigator = () => {
             <Stack.Navigator>
                 <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
