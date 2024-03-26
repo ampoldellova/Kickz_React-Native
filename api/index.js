@@ -7,10 +7,14 @@ const nodemailer = require("nodemailer");
 const app = express();
 const port = 8000;
 const cors = require("cors");
-app.use(cors());
+const brandRoutes = require('./routes/brandRoutes');
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use("/public/uploads", express.static(__dirname + "/public/uploads"));
+
+app.use('/api/v1/', brandRoutes);
 
 const jwt = require("jsonwebtoken");
 
@@ -29,7 +33,15 @@ app.listen(port, () => {
 
 const User = require("./models/user");
 const Order = require("./models/order");
+
 const { useReducer } = require("react");
+
+const generateSecretKey = () => {
+    const secretKey = crypto.randomBytes(32).toString("hex");
+    return secretKey;
+}
+
+const secretKey = generateSecretKey();
 
 //function to send Verrification Email to the user
 const sendVerificationEmail = async (email, verificationToken) => {
@@ -60,8 +72,6 @@ const sendVerificationEmail = async (email, verificationToken) => {
         console.log("Error sending verification email", error)
     }
 }
-
-nodemailer
 
 //endpoint to register in the app
 app.post("/register", async (req, res) => {
@@ -114,14 +124,6 @@ app.get("/verify/:token", async (req, res) => {
         res.status(500).json({ message: "Email Verification Failed" });
     }
 })
-
-const generateSecretKey = () => {
-    const secretKey = crypto.randomBytes(32).toString("hex");
-
-    return secretKey;
-}
-
-const secretKey = generateSecretKey();
 
 //endpoint to login the user
 app.post("/login", async (req, res) => {
