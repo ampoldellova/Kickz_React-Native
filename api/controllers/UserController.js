@@ -4,13 +4,16 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const ip = require("../utils/ipAddress");
 
-const generateSecretKey = () => {
-  const secretKey = crypto.randomBytes(32).toString("hex");
+// const generateSecretKey = () => {
+//   const secretKey = crypto.randomBytes(32).toString("hex");
 
-  return secretKey;
-};
+//   return secretKey;
+// };
 
-const secretKey = generateSecretKey();
+// const secretKey = generateSecretKey();
+
+const dotenv = require('dotenv');
+dotenv.config({path: '../env'})
 
 const sendVerificationEmail = async (email, verificationToken) => {
   //create a nodemailer transport
@@ -56,10 +59,12 @@ exports.login = async (req, res) => {
     }
 
     //generate a token
-    const token = jwt.sign({ userId: user._id }, secretKey);
+
+    const token = jwt.sign({ userId: user._id }, 'gWlkpvmeYqas79948OiH');
 
     res.status(200).json({ token });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: "Login Failed" });
   }
 };
@@ -116,9 +121,9 @@ exports.verifyEmail = async (req, res) => {
 };
 
 exports.userProfile = async (req, res, next) => {
-  // console.log(req.header('authorization'))
-  const user = await User.findById(req.user.id);
 
+  const user = await User.findById(req.user._id);
+// console.log(user)
   res.status(200).json({
     success: true,
     user

@@ -1,16 +1,47 @@
-import { StyleSheet, Text, Pressable, Alert, SafeAreaView, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Pressable,
+  Alert,
+  SafeAreaView,
+  Image,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
 import axios from "axios";
-import baseurl from '../assets/common/baseurl';
+import baseurl from "../assets/common/baseurl";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const getProfile = async () => {
+        try {
+          const token = await AsyncStorage.getItem("authToken");
+          if (token) {
+            const config = {
+              headers: {
+                Authorization: `${token}`,
+              },
+            };
 
-  
+            const response = await axios.get(`${baseurl}profile`, config);
+            setUser(response.data.user);
+          } else {
+            console.log("Authentication token not found");
+          }
+        } catch (error) {
+          console.log("Error fetching profile:", error);
+        }
+      };
+
+      getProfile();
+    }, [])
+  );
+
   const handleLogout = async () => {
     AsyncStorage.removeItem("authToken");
     Alert.alert("Logout", "You have been logged out");
