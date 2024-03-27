@@ -5,6 +5,7 @@ import React from "react";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+  
   const handleLogout = async () => {
     AsyncStorage.removeItem("authToken");
     Alert.alert("Logout");

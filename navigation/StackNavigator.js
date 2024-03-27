@@ -11,6 +11,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileScreen from '../screens/ProfileScreen';
+import CartScreen from '../screens/CartScreen';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -52,7 +53,7 @@ const StackNavigator = () => {
 
                 <Tab.Screen
                     name="Cart"
-                    component={HomeScreen}
+                    component={CartScreen}
                     options={{
                         tabBarLabel: "Cart",
                         tabBarLabelStyle: { color: "black" },
@@ -75,6 +76,7 @@ const StackNavigator = () => {
                 <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
