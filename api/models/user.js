@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        default: 'user.png'
+        default: 'http://192.168.254.101:8000/public/uploads/user.png'
     },
     verified: {
         type: Boolean,

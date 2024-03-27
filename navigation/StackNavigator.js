@@ -10,8 +10,11 @@ import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileScreen from '../screens/ProfileScreen';
 import CartScreen from '../screens/CartScreen';
+import BrandScreen from '../screens/Admin/Brand/BrandScreen';
+import BrandCreate from '../screens/Admin/Brand/BrandCreate';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -66,6 +69,21 @@ const StackNavigator = () => {
                             ),
                     }}
                 />
+                <Tab.Screen
+                    name="Brand"
+                    component={BrandScreen}
+                    options={{
+                        tabBarLabel: "Brand",
+                        tabBarLabelStyle: { color: "black" },
+                        headerShown: false,
+                        tabBarIcon: ({ focused }) =>
+                            focused ? (
+                                <MaterialCommunityIcons name="shoe-sneaker" size={24} color="black" />
+                            ) : (
+                                <MaterialCommunityIcons name="shoe-sneaker" size={24} color="black" />
+                            ),
+                    }}
+                />
             </Tab.Navigator>
         )
     }
@@ -78,6 +96,8 @@ const StackNavigator = () => {
                 <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown: false }} />
+
+                <Stack.Screen name="BrandCreate" component={BrandCreate} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

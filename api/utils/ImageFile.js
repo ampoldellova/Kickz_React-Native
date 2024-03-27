@@ -1,4 +1,4 @@
-const path = 'uploads/'
+const path = 'public/uploads/'
 
 const uploadSingle = async ({ imageFile, request }) => {
 
@@ -13,7 +13,7 @@ const uploadMultiple = async ({ imageFiles, request }) => {
         return `${basePath}${image.filename}`
     })
 
-    return images
+    return images   
 }
 
 module.exports = {
