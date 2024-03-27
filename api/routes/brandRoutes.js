@@ -5,5 +5,8 @@ const upload = require('../utils/multer');
 const BrandController = require('../controllers/BrandController');
 
 router.post('/create/brand', upload.array('images'), BrandController.createBrand);
+router.get('/get/brand', BrandController.allBrand)
+router.put('/update/brand/id:',upload.array('images'), BrandController.updateBrand )
+router.delete('/delete/brand/:id', BrandController.deleteBrand)
 
 module.exports = router;
