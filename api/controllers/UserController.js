@@ -12,8 +12,8 @@ const ip = require("../utils/ipAddress");
 
 // const secretKey = generateSecretKey();
 
-const dotenv = require('dotenv');
-dotenv.config({path: '../env'})
+const dotenv = require("dotenv");
+dotenv.config({ path: "../env" });
 
 const sendVerificationEmail = async (email, verificationToken) => {
   //create a nodemailer transport
@@ -21,11 +21,11 @@ const sendVerificationEmail = async (email, verificationToken) => {
   const transporter = nodemailer.createTransport({
     //configure the email service
     host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
-  auth: {
-    user: "923f1b4fe759c5",
-    pass: "bffdcf9078b243"
-  }
+    port: 2525,
+    auth: {
+      user: "923f1b4fe759c5",
+      pass: "bffdcf9078b243",
+    },
   });
 
   //compose the email message
@@ -33,8 +33,12 @@ const sendVerificationEmail = async (email, verificationToken) => {
     from: "kickz.com",
     to: email,
     subject: "Email Verification",
-    text: `Please click the following link to verify your email: http://${ip.WiFi[0]}:8000/api/v1/verify/${verificationToken}`,
   };
+  if (ip.WiFi && ip.WiFi.length > 0) {
+    mailOptions.text = `Please click the following link to verify your email: http://${ip.WiFi[0]}:8000/api/v1/verify/${verificationToken}`;
+  } else {
+    mailOptions.text = `Please click the following link to verify your email: http://${ip.Ethernet[0]}:8000/api/v1/verify/${verificationToken}`;
+  }
 
   //send the email
   try {
@@ -49,6 +53,9 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
     //check if the user exists
     const user = await User.findOne({ email });
+    if (user.verified === false) {
+      return res.status(200).json({ message: "Check Email First" });
+    }
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
@@ -60,11 +67,11 @@ exports.login = async (req, res) => {
 
     //generate a token
 
-    const token = jwt.sign({ userId: user._id }, 'gWlkpvmeYqas79948OiH');
+    const token = jwt.sign({ userId: user._id }, "gWlkpvmeYqas79948OiH");
 
     res.status(200).json({ token });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).json({ message: "Login Failed" });
   }
 };
@@ -121,11 +128,10 @@ exports.verifyEmail = async (req, res) => {
 };
 
 exports.userProfile = async (req, res, next) => {
-
   const user = await User.findById(req.user._id);
-// console.log(user)
+  // console.log(user)
   res.status(200).json({
     success: true,
-    user
-  })
-}
+    user,
+  });
+};

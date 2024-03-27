@@ -1,6 +1,6 @@
 const app = require("./index");
 const mongoose = require("mongoose");
-
+const ip = require('./utils/ipAddress')
 const port = 8000;
 
 mongoose
@@ -13,7 +13,7 @@ mongoose
   )
   .then(() => {
     console.log("Connected to MongoDB");
-
+    console.log(ip)
   })
   .catch((err) => {
     console.log("Error connecting to MongoDB", err);
