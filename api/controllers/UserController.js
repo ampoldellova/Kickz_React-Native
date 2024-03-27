@@ -114,3 +114,13 @@ exports.verifyEmail = async (req, res) => {
     res.status(500).json({ message: "Email Verification Failed" });
   }
 };
+
+exports.userProfile = async (req, res, next) => {
+  // console.log(req.header('authorization'))
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    user
+  })
+}

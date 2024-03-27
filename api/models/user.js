@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter your password'],
     },
+    image: {
+        type: String,
+        default: 'user.png'
+    },
     verified: {
         type: Boolean,
         default: false

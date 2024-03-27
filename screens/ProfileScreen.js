@@ -1,23 +1,28 @@
-import { StyleSheet, Text, View, Pressable, Alert } from "react-native";
+import { StyleSheet, Text, Pressable, Alert, SafeAreaView, Image } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback, useState } from "react";
+import axios from "axios";
+import baseurl from '../assets/common/baseurl';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+  const [user, setUser] = useState(null);
+
+
   
   const handleLogout = async () => {
     AsyncStorage.removeItem("authToken");
-    Alert.alert("Logout");
+    Alert.alert("Logout", "You have been logged out");
     navigation.navigate("Login");
   };
 
   return (
-    <View>
-      <Text>ProfileScreen</Text>
-      <Text></Text>
-      <Text></Text>
-      <Text></Text>
+    <SafeAreaView>
+      <Text style={{ fontSize: 30 }}>{user?.name}</Text>
+      {/* {user && user?.image && (
+        <Image source={{ uri: user.image }} style={styles.image} />
+      )} */}
       <Pressable
         onPress={handleLogout}
         style={{
@@ -40,7 +45,7 @@ const ProfileScreen = () => {
           Logout
         </Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   );
 };
 
