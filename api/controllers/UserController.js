@@ -21,11 +21,11 @@ const sendVerificationEmail = async (email, verificationToken) => {
   const transporter = nodemailer.createTransport({
     //configure the email service
     host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
-    auth: {
-      user: "2f4427edf0c7d5",
-      pass: "0342a4773b0930"
-    }
+  port: 2525,
+  auth: {
+    user: "923f1b4fe759c5",
+    pass: "bffdcf9078b243"
+  }
   });
 
   //compose the email message
