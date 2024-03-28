@@ -53,7 +53,11 @@ const ProfileScreen = () => {
       {console.log(user)}
       <Text style={{ fontSize: 30 }}>{user?.name}</Text>
       {user && user?.image && (
-        <Image source={{ uri: user.image }} style={styles.image} />
+        <Image source={require("../assets/user.png")} style={styles.image} />
+      )}
+
+      {!user && !user?.image && (
+        <Image source={{ uri: user?.image }} style={styles.image} />
       )}
 
       <Pressable
