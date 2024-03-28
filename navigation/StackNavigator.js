@@ -15,6 +15,8 @@ import ProfileScreen from '../screens/User/ProfileScreen';
 import CartScreen from '../screens/CartScreen';
 import BrandScreen from '../screens/Admin/Brand/BrandScreen';
 import BrandCreate from '../screens/Admin/Brand/BrandCreate';
+import AddAddress from '../screens/AddAddress';
+import AddressScreen from '../screens/AddressScreen';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -69,21 +71,6 @@ const StackNavigator = () => {
                             ),
                     }}
                 />
-                <Tab.Screen
-                    name="Brand"
-                    component={BrandScreen}
-                    options={{
-                        tabBarLabel: "Brand",
-                        tabBarLabelStyle: { color: "black" },
-                        headerShown: false,
-                        tabBarIcon: ({ focused }) =>
-                            focused ? (
-                                <MaterialCommunityIcons name="shoe-sneaker" size={24} color="black" />
-                            ) : (
-                                <MaterialCommunityIcons name="shoe-sneaker" size={24} color="black" />
-                            ),
-                    }}
-                />
             </Tab.Navigator>
         )
     }
@@ -98,6 +85,9 @@ const StackNavigator = () => {
                 <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown: false }} />
 
                 <Stack.Screen name="BrandCreate" component={BrandCreate} options={{ headerShown: false }} />
+                <Stack.Screen name="Brands" component={BrandScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="AddAddress" component={AddAddress} options={{ headerShown: false }} />
+                <Stack.Screen name="Addresses" component={AddressScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

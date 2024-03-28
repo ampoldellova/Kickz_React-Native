@@ -1,15 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import StackNavigator from "./navigation/StackNavigator";
+import { StyleSheet } from "react-native";
 import { PaperProvider } from 'react-native-paper';
 import { NativeBaseProvider } from "native-base";
+import { ModalPortal } from "react-native-modals";
+import DrawerNavigation from "./navigation/DrawerNavigation";
+import StackNavigator from "./navigation/StackNavigator";
+import { UserContext } from "./UserContext";
 
 export default function App() {
   return (
     <>
       <NativeBaseProvider>
         <PaperProvider>
-        <StackNavigator />
+          <UserContext>
+            <StackNavigator />
+            {/* <DrawerNavigation /> */}
+            <ModalPortal />
+          </UserContext>
         </PaperProvider>
       </NativeBaseProvider>
     </>

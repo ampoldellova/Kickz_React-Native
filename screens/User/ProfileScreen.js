@@ -51,9 +51,14 @@ const ProfileScreen = () => {
     navigation.navigate("Login");
   };
 
+  const gotoBrands = () => {
+    // Navigate to the desired screen
+    navigation.navigate('Brands');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={require("../../assets/background3.png")} style={styles.coverPhoto} />
+      <Image source={require("../../assets/background.jpg")} style={styles.coverPhoto} />
       <View style={styles.avatarContainer}>
         {user && user.image ? (
           <Image source={{ uri: user.image }} style={styles.avatar} />
@@ -111,6 +116,54 @@ const ProfileScreen = () => {
           </Text>
         </Pressable>
       </View>
+
+      {user && user.role === "admin" ? (
+        <View style={styles.buttonContainer}>
+          <Pressable
+            onPress={gotoBrands}
+            style={{
+              width: 150,
+              backgroundColor: "#0F0F0F",
+              borderRadius: 10,
+              padding: 15,
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                color: "white",
+                fontSize: 16,
+                fontWeight: "bold",
+              }}
+            >
+              Brands
+            </Text>
+          </Pressable>
+
+          <Pressable
+
+            style={{
+              width: 150,
+              backgroundColor: "#0F0F0F",
+              borderRadius: 10,
+              padding: 15,
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                color: "white",
+                fontSize: 16,
+                fontWeight: "bold",
+              }}
+            >
+              Products
+            </Text>
+          </Pressable>
+        </View>
+      ) : (
+        <></>
+      )}
     </SafeAreaView>
   );
 };
