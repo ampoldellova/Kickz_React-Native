@@ -55,7 +55,7 @@ export default function ListItems({ item, deleteBrand }) {
           </DataTable.Cell>
           <DataTable.Cell>{item.name}</DataTable.Cell>
           <DataTable.Cell>{item.price}</DataTable.Cell>
-          <DataTable.Cell>{item.description}</DataTable.Cell>
+          {/* <DataTable.Cell>{item.description}</DataTable.Cell> */}
           <DataTable.Cell>{item.size}</DataTable.Cell>
           <DataTable.Cell>{item.type}</DataTable.Cell>
           <DataTable.Cell>{item.colorway}</DataTable.Cell>
