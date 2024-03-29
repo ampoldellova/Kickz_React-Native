@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,13 +11,14 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setFormData, setImageUpload } from "../../../utils/formData";
 import * as ImagePicker from "expo-image-picker";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Button } from "native-base";
 
 import { FontAwesome } from "@expo/vector-icons";
 import baseurl from "../../../assets/common/baseurl";
 
-const BrandCreate = () => {
+const ProductUpdate = ({ route }) => {
+  const id = route.params;
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -47,6 +48,7 @@ const BrandCreate = () => {
       description: description,
       images: images,
     };
+    console.log(images);
     brand.images = await setImageUpload(brand.images);
 
     const formData = await setFormData(brand);
@@ -59,7 +61,7 @@ const BrandCreate = () => {
     };
 
     axios
-      .post(`${baseurl}create/brand`, formData, config)
+      .put(`${baseurl}update/brand/${id}`, formData, config)
       .then((res) => {
         setName("");
         setDescription("");
@@ -67,6 +69,27 @@ const BrandCreate = () => {
         navigation.navigate("Brands");
       })
       .catch((error) => console.log(error.response));
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getBrand();
+    }, [])
+  );
+
+  const getBrand = async () => {
+    try {
+      await axios
+        .get(`${baseurl}get/single/brand/${id}`)
+        .then((response) => {
+          setName(response.data.brand.name);
+          setDescription(response.data.brand.description);
+          setImages(response.data.brand.images);
+        })
+        .catch((error) => console.log(error.response));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -97,6 +120,23 @@ const BrandCreate = () => {
         <Text style={{ color: "white", fontWeight: "bold" }}>Pick Image</Text>
       </Button>
       <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 10 }}>
+        {/* {rerender.length > 0
+          ? rerender.map((image, index) => (
+              <View key={index} style={{ flexDirection: "row", margin: 7 }}>
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: 100, height: 100, margin: 5 }}
+                />
+                <TouchableOpacity onPress={() => removeImage(index)}>
+                  <FontAwesome
+                    name="remove"
+                    size={24}
+                    color="red"
+                    style={{ marginLeft: 6 }}
+                  />
+                </TouchableOpacity>
+              </View>
+            )) */}
         {images.map((image, index) => (
           <View key={index} style={{ flexDirection: "row", margin: 7 }}>
             <Image
@@ -123,7 +163,7 @@ const BrandCreate = () => {
   );
 };
 
-export default BrandCreate;
+export default ProductUpdate;
 
 const styles = StyleSheet.create({
   input: {

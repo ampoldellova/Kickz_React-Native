@@ -53,23 +53,32 @@ const ProfileScreen = () => {
 
   const gotoBrands = () => {
     // Navigate to the desired screen
-    navigation.navigate('Brands');
+    navigation.navigate("Brands");
+  };
+
+  const gotoProducts = () => {
+    // Navigate to the desired screen
+    navigation.navigate("Products");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={require("../../assets/background.jpg")} style={styles.coverPhoto} />
+      <Image
+        source={require("../../assets/background.jpg")}
+        style={styles.coverPhoto}
+      />
       <View style={styles.avatarContainer}>
         {user && user.image ? (
           <Image source={{ uri: user.image }} style={styles.avatar} />
         ) : (
-          <Image source={require("../../assets/user.png")} style={styles.avatar} />
+          <Image
+            source={require("../../assets/user.png")}
+            style={styles.avatar}
+          />
         )}
 
         <Text style={styles.name}>{user?.name}</Text>
-        <Text
-          style={{ fontSize: 16, color: "#068FFF", fontWeight: "500" }}
-        >
+        <Text style={{ fontSize: 16, color: "#068FFF", fontWeight: "500" }}>
           {user?.email}
         </Text>
       </View>
@@ -141,7 +150,7 @@ const ProfileScreen = () => {
           </Pressable>
 
           <Pressable
-
+            onPress={gotoProducts}
             style={{
               width: 150,
               backgroundColor: "#0F0F0F",
@@ -172,16 +181,16 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    alignItems: 'center',
+    width: "100%",
+    alignItems: "center",
   },
   coverPhoto: {
-    width: '100%',
+    width: "100%",
     height: 200,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   avatarContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: -75,
   },
   avatar: {
@@ -189,12 +198,12 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
     borderWidth: 5,
-    borderColor: 'white',
+    borderColor: "white",
   },
   name: {
     marginTop: 15,
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   buttonContainer: {
     flexDirection: "row",

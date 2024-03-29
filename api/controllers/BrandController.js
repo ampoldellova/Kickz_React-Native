@@ -76,3 +76,5 @@ exports.getSingleBrand = async (req, res) => {
     console.log(err);
   }
 };
+
+
