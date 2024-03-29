@@ -44,15 +44,7 @@ const BrandScreen = () => {
   return (
     <View>
       <Box
-        style={{ with: width / 2.5 }}
-        // style={{
-        //   display: "flex",
-        //   flexDirection: "row",
-        //   gap: 10,
-        //   justifyContent: "space-between",
-        //   padding: 5,
-        //   height: 45,
-        // }}
+        style={{ with: width `/ 2.5` }}
       >
         <Input
           onChangeText={(value) => handleSearch(value)}
