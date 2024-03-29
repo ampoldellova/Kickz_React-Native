@@ -79,7 +79,6 @@ const ProductScreen = () => {
             <DataTable.Title style={{ width: 100 }}>Image</DataTable.Title>
             <DataTable.Title style={{ width: 100 }}>Name</DataTable.Title>
             <DataTable.Title style={{ width: 80 }}>Price</DataTable.Title>
-            {/* <DataTable.Title style={{ width: 200 }}>Description</DataTable.Title> */}
             <DataTable.Title style={{ width: 50 }}>Size</DataTable.Title>
             <DataTable.Title style={{ width: 100 }}>Type</DataTable.Title>
             <DataTable.Title style={{ width: 100 }}>Color Way</DataTable.Title>
@@ -87,9 +86,8 @@ const ProductScreen = () => {
             <DataTable.Title style={{ width: 100 }}>Brand</DataTable.Title>
           </DataTable.Header>
 
-          <View style={{ maxHeight: "73%" }}>
+          <View style={{ maxHeight: "100%" }}>
             <ScrollView>
-              {/* {filteredItems.slice(from, to).map((item, i) => ( */}
               {items.map((item, i) => (
                 <ListItems item={item} key={i} deleteBrand={deleteBrand} />
               ))}
