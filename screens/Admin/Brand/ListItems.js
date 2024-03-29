@@ -54,7 +54,7 @@ export default function ListItems({ item, deleteBrand }) {
             </Box>
           </DataTable.Cell>
           <DataTable.Cell>{item.name}</DataTable.Cell>
-          <DataTable.Cell>{item.description}</DataTable.Cell>
+          {/* <DataTable.Cell>{item.description}</DataTable.Cell> */}
         </View>
         {showAction && (
           <Box

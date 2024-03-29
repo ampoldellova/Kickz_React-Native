@@ -49,28 +49,9 @@ const BrandScreen = () => {
   };
   return (
     <View>
-      <Text>BrandScreen</Text>
       <Box
-        style={{ with: width / 2.5 }}
-        // style={{
-        //   display: "flex",
-        //   flexDirection: "row",
-        //   gap: 10,
-        //   justifyContent: "space-between",
-        //   padding: 5,
-        //   height: 45,
-        // }}
+        style={{ with: width / 2.5, marginTop: 40 }}
       >
-        <Input
-            onChangeText={(value) => handleSearch(value)}
-            width={"85%"}
-            placeholder="Search"
-            leftElement={
-              <View style={{ marginHorizontal: 10, marginRight: -5 }}>
-                <SearchIcon />
-              </View>
-            }
-          />
         <Button
           variant={"outline"}
           size={"xs"}
@@ -83,11 +64,11 @@ const BrandScreen = () => {
       </Box>
       <DataTable style={{}}>
         <DataTable.Header>
-          <DataTable.Title>Image</DataTable.Title>
-          <DataTable.Title>Name</DataTable.Title>
-          <DataTable.Title>Description</DataTable.Title>
+          <DataTable.Title style={{ width: 100 }}>Image</DataTable.Title>
+          <DataTable.Title style={{ width: 100 }}>Name</DataTable.Title>
+          {/* <DataTable.Title >Description</DataTable.Title> */}
         </DataTable.Header>
-        <View style={{ maxHeight: "73%" }}>
+        <View style={{ maxHeight: "100%" }}>
           <ScrollView>
             {/* {filteredItems.slice(from, to).map((item, i) => ( */}
             {items.map((item, i) => (

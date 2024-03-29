@@ -64,7 +64,7 @@ const HomeScreen = () => {
   const getAllProducts = async () => {
     const { data: products } = await axios.get(`${baseurl}get/products`);
     setProducts(products.product);
-    // console.log(products)
+    setFilteredProducts(products.product)
   };
 
   const handleSearch = (keyword) => {
@@ -135,16 +135,16 @@ const HomeScreen = () => {
 
             <SliderBox images={banners} autoPlay circleLoop dotColor={"white"} inactiveDotColor={"#fff8e5"} ImageComponentStyle={{ width: "100%" }} />
 
-
             <Text style={{ padding: 10, fontSize: 18, fontWeight: "bold", textAlign: "center" }}>
               Our Products
             </Text>
 
-            <View style={{
-              flexDirection: "row",
-              alignItems: "center",
-              flexWrap: "wrap",
-            }}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
             >
               {filteredProducts?.map((item, index) => (
                 <Products item={item} key={index} />
