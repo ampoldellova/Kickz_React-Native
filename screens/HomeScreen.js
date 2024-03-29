@@ -54,15 +54,23 @@ const HomeScreen = () => {
     }
   };
 
+  
   const getAllBrands = async () => {
     const { data: brands } = await axios.get(`${baseurl}get/brand`);
     setBrands(brands);
   };
-
+  
   const getAllProducts = async () => {
     const { data: products } = await axios.get(`${baseurl}get/products`);
     setProducts(products);
   };
+  
+  const handleClick = (e) => {
+    const keyword = e.target.value;
+    const regex = new RegExp(keyword, 'i');
+    const filteredProducts = products.filter(module => regex.test(module.category));
+    setFilteredModules(filteredProducts);
+  }
 
   useFocusEffect(
     useCallback(() => {

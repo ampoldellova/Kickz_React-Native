@@ -109,14 +109,6 @@ const ProductCreate = () => {
     <ScrollView style={{ marginTop: 50 }}>
       <View style={{ padding: 10 }}>
 
-        {/* <Text style={{ marginLeft: 10 }}>Name</Text>
-        <TextInput
-          value={name}
-          style={styles.input}
-          onChangeText={(text) => setName(text)}
-          placeholder="Brand Name"
-        /> */}
-
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontSize: 15, fontWeight: "bold" }}>
             Shoe name
@@ -156,16 +148,6 @@ const ProductCreate = () => {
           </Select>
         </View>
 
-        {/* <Text style={{ marginLeft: 10 }}>Price</Text>
-        <TextInput
-          value={price}
-          keyboardType="numeric"
-          style={styles.input}
-          onChangeText={(text) => setPrice(text)}
-          placeholder="Price"
-          maxLength={5}
-        /> */}
-
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontSize: 15, fontWeight: "bold" }}>
             Shoe Price
@@ -187,14 +169,6 @@ const ProductCreate = () => {
           />
         </View>
 
-        {/* <Text style={{ marginLeft: 10 }}>Description</Text>
-        <TextInput
-          value={description}
-          style={styles.input}
-          onChangeText={(text) => setDescription(text)}
-          placeholder="Brand Description"
-        /> */}
-
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontSize: 15, fontWeight: "bold" }}>
             Shoe Description
@@ -214,16 +188,6 @@ const ProductCreate = () => {
             placeholder="Enter shoe description"
           />
         </View>
-
-        {/* <Text style={{ marginLeft: 10 }}>Size</Text>
-        <TextInput
-          value={size}
-          keyboardType="numeric"
-          style={styles.input}
-          onChangeText={(text) => setSize(text)}
-          placeholder="Size"
-          maxLength={2}
-        /> */}
 
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontSize: 15, fontWeight: "bold" }}>
@@ -312,30 +276,13 @@ const ProductCreate = () => {
             placeholder="Enter stock of shoe"
           />
         </View>
-        {/* <Text style={{ marginLeft: 10 }}>Color Way</Text>
-        <TextInput
-          value={colorway}
-          style={styles.input}
-          onChangeText={(text) => setColorway(text)}
-          placeholder="Color Way"
-        /> */}
 
-        {/* <Text style={{ marginLeft: 10 }}>Stock</Text>
-        <TextInput
-          value={stock}
-          keyboardType="numeric"
-          style={styles.input}
-          onChangeText={(text) => setStock(text)}
-          placeholder="Stock"
-          maxLength={5}
-        /> */}
-
-        <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", flexWrap: "wrap", marginTop: 10 }}>
           {images.map((image, index) => (
             <View key={index} style={{ flexDirection: "row", margin: 7 }}>
               <Image
                 source={{ uri: image }}
-                style={{ width: 100, height: 100, margin: 5 }}
+                style={{ width: 98, height: 98 }}
               />
               <TouchableOpacity onPress={() => removeImage(index)}>
                 <FontAwesome
