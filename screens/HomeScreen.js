@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, ScrollView, TextInput, Pressable, Image } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -8,10 +8,50 @@ import { BottomModal, ModalContent, SlideAnimation } from 'react-native-modals';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import baseurl from '../assets/common/baseurl';
 
 const HomeScreen = () => {
   const [modal, setModal] = useState(false);
+  const [user, setUser] = useState("");
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState("");
   const navigation = useNavigation();
+  console.log(selectedAddress)
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = await AsyncStorage.getItem("authToken");
+      setUser(token)
+    }
+
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      fetchAddresses();
+    }
+  }, [user, modal])
+
+  const fetchAddresses = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `${user}`,
+        },
+      };
+
+      const response = await axios.get(`${baseurl}addresses/${user}`, config);
+      const { addresses } = response.data;
+
+      setAddresses(addresses);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  // console.log("addresses", addresses);
 
   const list = [
     {
@@ -66,9 +106,15 @@ const HomeScreen = () => {
 
           <Pressable onPress={() => setModal(!modal)} style={{ flexDirection: "row", alignItems: "center", gap: 5, padding: 10, backgroundColor: "#61677A" }}>
             <Entypo name="location-pin" size={24} color="#FFF6E0" />
-            <Pressable onPress={() => setModal(!modal)}>
-              <Text style={{ fontSize: 13, fontWeight: "500", color: "#FFF6E0" }}>Deliver to Ampol - East Rembo 1224</Text>
-            </Pressable>
+            {selectedAddress ? (
+              <Text style={{ fontSize: 13, fontWeight: "500", color: "#FFF6E0" }}>
+                Deliver to {selectedAddress?.name} - {selectedAddress?.street}
+              </Text>
+            ) : (
+              <Text style={{ fontSize: 13, fontWeight: "500", color: "#FFF6E0" }}>
+                Select an address
+              </Text>
+            )}
             <MaterialIcons name="keyboard-arrow-down" size={24} color="#FFF6E0" />
           </Pressable>
 
@@ -101,6 +147,55 @@ const HomeScreen = () => {
           </View>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {addresses?.map((item, index) => (
+              <Pressable
+                onPress={() => setSelectedAddress(item)}
+                style={{
+                  width: 140,
+                  height: 140,
+                  borderColor: "#D0D0D0",
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  padding: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: 3,
+                  marginRight: 15,
+                  marginTop: 10,
+                  backgroundColor: selectedAddress === item ? "#BFCFE7" : "white"
+                }}
+              >
+                <View
+                  style={{ flexDirection: "row", alignItems: "center", gap: 3 }}
+                >
+                  <Text style={{ fontSize: 13, fontWeight: "bold" }}>
+                    {item?.name}
+                  </Text>
+                  <Entypo name="location-pin" size={20} color="red" />
+                </View>
+
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 10, textAlign: "center" }}
+                >
+                  {item?.houseNo}, {item?.city}
+                </Text>
+
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 10, textAlign: "center" }}
+                >
+                  {item?.landmark}, {item?.street}
+                </Text>
+                <Text
+                  numberOfLines={1}
+                  style={{ width: 130, fontSize: 10, textAlign: "center" }}
+                >
+                  {item?.country}
+                </Text>
+              </Pressable>
+            ))}
+
             <Pressable onPress={() => {
               setModal(false);
               navigation.navigate("AddAddress")
@@ -109,6 +204,7 @@ const HomeScreen = () => {
                 width: 140,
                 height: 140,
                 borderColor: "#D0D0D0",
+                borderRadius: 10,
                 marginTop: 10,
                 borderWidth: 1,
                 padding: 10,
