@@ -67,6 +67,15 @@ const HomeScreen = () => {
     // console.log(products)
   };
 
+  const handleSearch = (keyword) => {
+    const regex = new RegExp(keyword, 'i');
+    const filteredProducts = products.filter(product => regex.test(product.name) ||
+      regex.test(product.brand.name) ||
+      regex.test(product.colorway) ||
+      regex.test(product.type));
+    setFilteredProducts(filteredProducts);
+  }
+
   const handleClick = (keyword) => {
     const regex = new RegExp(keyword, 'i');
     const filteredProducts = products.filter(product => regex.test(product.brand.name));
@@ -96,7 +105,7 @@ const HomeScreen = () => {
             <View style={{ backgroundColor: "#0F0F0F", padding: 10, flexDirection: "row", alignItems: "center" }}>
               <Pressable style={{ flexDirection: "row", alignItems: "center", marginHorizontal: 7, gap: 10, backgroundColor: "white", borderRadius: 3, height: 38, flex: 1 }}>
                 <AntDesign style={{ paddingLeft: 10 }} name="search1" size={22} color="black" />
-                <TextInput placeholder="Search..." />
+                <TextInput onChangeText={(value) => handleSearch(value)} placeholder="Search..." />
               </Pressable>
               <Entypo name="mic" size={24} color="white" />
             </View>
