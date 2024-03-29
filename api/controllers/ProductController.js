@@ -1,9 +1,14 @@
 const Product = require("../models/product");
+const Brand = require("../models/brand");
 const ImageFile = require("../utils/ImageFile");
 
 exports.getProducts = async (req, res) => {
   try {
-    const product = await Product.find();
+    const product = await Product.find().populate({
+      path: 'brand',
+      model: Brand
+  });
+  
     res.status(200).json({
       product: product,
     });

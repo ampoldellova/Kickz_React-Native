@@ -18,6 +18,7 @@ const HomeScreen = () => {
   const [user, setUser] = useState("");
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [brands, setBrands] = useState([]);
   const [products, setProducts] = useState([]);
   const navigation = useNavigation();
@@ -54,22 +55,22 @@ const HomeScreen = () => {
     }
   };
 
-  
+
   const getAllBrands = async () => {
     const { data: brands } = await axios.get(`${baseurl}get/brand`);
     setBrands(brands);
   };
-  
+
   const getAllProducts = async () => {
     const { data: products } = await axios.get(`${baseurl}get/products`);
-    setProducts(products);
+    setProducts(products.product);
+    // console.log(products)
   };
-  
-  const handleClick = (e) => {
-    const keyword = e.target.value;
+
+  const handleClick = (keyword) => {
     const regex = new RegExp(keyword, 'i');
-    const filteredProducts = products.filter(module => regex.test(module.category));
-    setFilteredModules(filteredProducts);
+    const filteredProducts = products.filter(product => regex.test(product.brand.name));
+    setFilteredProducts(filteredProducts);
   }
 
   useFocusEffect(
@@ -116,7 +117,7 @@ const HomeScreen = () => {
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {brands?.brand?.map((item, index) => (
-                <Pressable key={index} style={{ margin: 10, marginTop: -5, justifyContent: "center", alignItems: "center" }}>
+                <Pressable onPress={() => handleClick(item.name)} onkey={index} style={{ margin: 10, marginTop: -5, justifyContent: "center", alignItems: "center" }}>
                   <Image style={{ width: 70, height: 70, resizeMode: "contain" }} source={{ uri: item?.images[0] }} />
                   <Text style={{ textAlign: "center", fontSize: 12, fontWeight: "500" }}>{item?.name}</Text>
                 </Pressable>
@@ -136,7 +137,7 @@ const HomeScreen = () => {
               flexWrap: "wrap",
             }}
             >
-              {products?.product?.map((item, index) => (
+              {filteredProducts?.map((item, index) => (
                 <Products item={item} key={index} />
               ))}
             </View>
