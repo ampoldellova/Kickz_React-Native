@@ -28,7 +28,7 @@ const RegisterScreen = () => {
             setEmail("");
             Alert.alert(
                 "Registration Successfull",
-                "You have registered successfully"
+                "Please check your email to verify your account first to proceed login."
             );
             navigation.navigate('Login')
         }).catch((error) => {
