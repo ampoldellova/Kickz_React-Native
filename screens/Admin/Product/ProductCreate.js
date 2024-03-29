@@ -139,7 +139,7 @@ const ProductCreate = () => {
 
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontSize: 15, fontWeight: "bold", marginBottom: 10 }}>
-            Shoe type
+            Shoe brand
           </Text>
 
           <Select
@@ -173,6 +173,7 @@ const ProductCreate = () => {
 
           <TextInput
             value={price}
+            keyboardType="numeric"
             onChangeText={(text) => setPrice(text)}
             placeholderTextColor={"gray"}
             style={{
