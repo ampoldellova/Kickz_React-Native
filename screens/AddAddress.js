@@ -22,9 +22,7 @@ const AddAddress = () => {
     }, []);
 
     useEffect(() => {
-        if (user) {
-            fetchAddresses();
-        }
+        fetchAddresses();
     }, [user])
 
     console.log(user)
@@ -51,6 +49,8 @@ const AddAddress = () => {
             fetchAddresses();
         }, [])
     );
+
+
     console.log("addresses", addresses);
 
     return (

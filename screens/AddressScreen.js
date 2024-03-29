@@ -4,7 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import baseurl from '../assets/common/baseurl';
-import { CountrySelection } from 'react-native-country-list';
+import { Icon, Select } from 'native-base';
+
+const countries = require("../assets/countries.json")
 
 const AddressScreen = () => {
     const navigation = useNavigation();
@@ -210,20 +212,23 @@ const AddressScreen = () => {
                 </View>
 
                 <View style={{ marginVertical: 10 }}>
-                    <Text style={{ fontSize: 15, fontWeight: "bold" }}>Country</Text>
-                    <TextInput
-                        value={country}
-                        onChangeText={(text) => setCountry(text)}
+                    <Text style={{ fontSize: 15, fontWeight: "bold", marginBottom: 10 }}>Country</Text>
+                    <Select
+                        width="100%"
+                        selectedValue={country}
+                        placeholder="Select your country"
                         placeholderTextColor={"gray"}
-                        placeholder='Country'
-                        style={{
-                            padding: 10,
-                            borderColor: "#D0D0D0",
-                            borderWidth: 1,
-                            marginTop: 10,
-                            borderRadius: 5
-                        }}
-                    />
+                        style={{ fontSize: 15, borderColor: "#D0D0D0", padding: 10}}
+                        onValueChange={(e) => setCountry(e)}
+                    >
+                        {countries.map((country) => {
+                            return <Select.Item
+                                key={country.code}
+                                label={country.name}
+                                value={country.name}
+                            />
+                        })}
+                    </Select>
                 </View>
 
                 <Pressable
