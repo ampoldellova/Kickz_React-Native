@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform, ScrollView, TextInput, Pressable, Image } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Platform, ScrollView, TextInput, Pressable, Image, ImageBackground } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
@@ -11,6 +11,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import baseurl from '../assets/common/baseurl';
+import Products from './Product/Products';
 
 const HomeScreen = () => {
   const [modal, setModal] = useState(false);
@@ -18,9 +19,9 @@ const HomeScreen = () => {
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState("");
   const [brands, setBrands] = useState([]);
+  const [products, setProducts] = useState([]);
   const navigation = useNavigation();
 
-  console.log(selectedAddress)
   useEffect(() => {
     const fetchUser = async () => {
       const token = await AsyncStorage.getItem("authToken");
@@ -58,9 +59,15 @@ const HomeScreen = () => {
     setBrands(brands);
   };
 
+  const getAllProducts = async () => {
+    const { data: products } = await axios.get(`${baseurl}get/products`);
+    setProducts(products);
+  };
+
   useFocusEffect(
     useCallback(() => {
       getAllBrands();
+      getAllProducts();
     }, [])
   );
 
@@ -75,43 +82,58 @@ const HomeScreen = () => {
   return (
     <>
       <SafeAreaView style={{ paddingTop: Platform.OS === "android" ? 40 : 0, flex: 1, backgroundColor: "white" }}>
-        <ScrollView>
-          <View style={{ backgroundColor: "#0F0F0F", padding: 10, flexDirection: "row", alignItems: "center" }}>
-            <Pressable>
-              <FontAwesome style={{ marginRight: 10 }} name="bars" size={24} color="white" />
-            </Pressable>
-
-            <Pressable style={{ flexDirection: "row", alignItems: "center", marginHorizontal: 7, gap: 10, backgroundColor: "white", borderRadius: 3, height: 38, flex: 1 }}>
-              <AntDesign style={{ paddingLeft: 10 }} name="search1" size={22} color="black" />
-              <TextInput placeholder="Search..." />
-            </Pressable>
-          </View>
-
-          <Pressable onPress={() => setModal(!modal)} style={{ flexDirection: "row", alignItems: "center", gap: 5, padding: 10, backgroundColor: "#61677A" }}>
-            <Entypo name="location-pin" size={24} color="#FFF6E0" />
-            {selectedAddress ? (
-              <Text style={{ fontSize: 13, fontWeight: "500", color: "#FFF6E0" }}>
-                Deliver to {selectedAddress?.name} - {selectedAddress?.street}
-              </Text>
-            ) : (
-              <Text style={{ fontSize: 13, fontWeight: "500", color: "#FFF6E0" }}>
-                Select an address
-              </Text>
-            )}
-            <MaterialIcons name="keyboard-arrow-down" size={24} color="#FFF6E0" />
-          </Pressable>
-
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {brands?.brand?.map((item, index) => (
-              <Pressable key={index} style={{ margin: 10, marginTop: -5, justifyContent: "center", alignItems: "center" }}>
-                <Image style={{ width: 70, height: 70, resizeMode: "contain" }} source={{ uri: item?.images[0] }} />
-                <Text style={{ textAlign: "center", fontSize: 12, fontWeight: "500" }}>{item?.name}</Text>
+        <ImageBackground source={require("../assets/homeBackground.png")} style={styles.background}>
+          <ScrollView>
+            <View style={{ backgroundColor: "#0F0F0F", padding: 10, flexDirection: "row", alignItems: "center" }}>
+              <Pressable style={{ flexDirection: "row", alignItems: "center", marginHorizontal: 7, gap: 10, backgroundColor: "white", borderRadius: 3, height: 38, flex: 1 }}>
+                <AntDesign style={{ paddingLeft: 10 }} name="search1" size={22} color="black" />
+                <TextInput placeholder="Search..." />
               </Pressable>
-            ))}
-          </ScrollView>
+              <Entypo name="mic" size={24} color="white" />
+            </View>
 
-          <SliderBox images={banners} autoPlay circleLoop dotColor={"white"} inactiveDotColor={"#FFF6E0"} ImageComponentStyle={{ width: "100%" }} />
-        </ScrollView>
+            <Pressable onPress={() => setModal(!modal)} style={{ flexDirection: "row", alignItems: "center", gap: 5, padding: 10, backgroundColor: "#fff8e5" }}>
+              <Entypo name="location" size={20} color="#02ad98" style={{ marginRight: 5, marginLeft: 5 }} />
+              {selectedAddress ? (
+                <Text style={{ fontSize: 13, fontWeight: "500", color: "#0F0F0F" }}>
+                  Deliver to {selectedAddress?.name} - {selectedAddress?.street}
+                </Text>
+              ) : (
+                <Text style={{ fontSize: 13, fontWeight: "500", color: "#0F0F0F" }}>
+                  Select an address
+                </Text>
+              )}
+              <MaterialIcons name="keyboard-arrow-down" size={20} color="#0F0F0F" />
+            </Pressable>
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {brands?.brand?.map((item, index) => (
+                <Pressable key={index} style={{ margin: 10, marginTop: -5, justifyContent: "center", alignItems: "center" }}>
+                  <Image style={{ width: 70, height: 70, resizeMode: "contain" }} source={{ uri: item?.images[0] }} />
+                  <Text style={{ textAlign: "center", fontSize: 12, fontWeight: "500" }}>{item?.name}</Text>
+                </Pressable>
+              ))}
+            </ScrollView>
+
+            <SliderBox images={banners} autoPlay circleLoop dotColor={"white"} inactiveDotColor={"#fff8e5"} ImageComponentStyle={{ width: "100%" }} />
+
+
+            <Text style={{ padding: 10, fontSize: 18, fontWeight: "bold", textAlign: "center" }}>
+              Our Products
+            </Text>
+
+            <View style={{
+              flexDirection: "row",
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+            >
+              {products?.product?.map((item, index) => (
+                <Products item={item} key={index} />
+              ))}
+            </View>
+          </ScrollView>
+        </ImageBackground>
       </SafeAreaView>
 
       <BottomModal
@@ -217,4 +239,10 @@ const HomeScreen = () => {
 
 export default HomeScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover', // Stretch background image to cover entire screen
+    justifyContent: 'center',
+  }
+})
