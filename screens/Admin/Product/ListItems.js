@@ -7,7 +7,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import baseurl from "../../../assets/common/baseurl";
 
-export default function ListItems({ item, deleteBrand }) {
+export default function ListItems({ item, deleteProduct }) {
   const navigation = useNavigation();
 
   const [showAction, setShowAction] = useState(false);
@@ -79,7 +79,7 @@ export default function ListItems({ item, deleteBrand }) {
               <MaterialCommunityIcons name={"file-edit"} size={18} />
             </Button>
             <Button
-              onPress={() => deleteBrand(item._id)}
+              onPress={() => deleteProduct(item._id)}
               colorScheme={"danger"}
               size={"xs"}
               p={2}

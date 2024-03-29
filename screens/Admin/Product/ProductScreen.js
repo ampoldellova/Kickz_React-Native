@@ -43,10 +43,10 @@ const ProductScreen = () => {
     setFilteredItems(filteredItems);
   };
 
-  const deleteBrand = async (id) => {
-    await axios.delete(`${baseurl}delete/brand/${id}`);
-    Alert.alert("Brand Deleted");
-    getAllBrand();
+  const deleteProduct = async (id) => {
+    await axios.delete(`${baseurl}delete/product/${id}`);
+    Alert.alert("Product Deleted");
+    getAllproduct();
   };
 
   return (
@@ -89,7 +89,7 @@ const ProductScreen = () => {
           <View style={{ maxHeight: "100%" }}>
             <ScrollView>
               {items.map((item, i) => (
-                <ListItems item={item} key={i} deleteBrand={deleteBrand} />
+                <ListItems item={item} key={i} deleteProduct={deleteProduct} />
               ))}
             </ScrollView>
           </View>
