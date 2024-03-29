@@ -1,4 +1,4 @@
-import { View, image, Dimensions } from "react-native";
+import { View, image, Dimensions, Alert } from "react-native";
 import React, { useCallback, useState } from "react";
 import {
   AddIcon,
@@ -41,6 +41,12 @@ const BrandScreen = () => {
     const filteredItems = items.filter((item) => regex.test(item.name));
     setFilteredItems(filteredItems);
   };
+
+  const deleteBrand = async (id) => {
+    await axios.delete(`${baseurl}delete/brand/${id}`)
+    Alert.alert("Brand Deleted")
+    getAllBrand();
+  };
   return (
     <View>
       <Text>BrandScreen</Text>
@@ -55,7 +61,7 @@ const BrandScreen = () => {
         //   height: 45,
         // }}
       >
-        {/* <Input
+        <Input
             onChangeText={(value) => handleSearch(value)}
             width={"85%"}
             placeholder="Search"
@@ -64,7 +70,7 @@ const BrandScreen = () => {
                 <SearchIcon />
               </View>
             }
-          /> */}
+          />
         <Button
           variant={"outline"}
           size={"xs"}
@@ -85,7 +91,7 @@ const BrandScreen = () => {
           <ScrollView>
             {/* {filteredItems.slice(from, to).map((item, i) => ( */}
             {items.map((item, i) => (
-              <ListItems item={item} key={i} />
+              <ListItems item={item} key={i} deleteBrand={deleteBrand} />
             ))}
           </ScrollView>
         </View>

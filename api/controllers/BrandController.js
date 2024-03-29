@@ -65,3 +65,14 @@ exports.deleteBrand = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.getSingleBrand = async (req, res) => {
+  try {
+    const brand = await Brand.findById(req.params.id);
+    res.status(200).json({
+      brand: brand,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

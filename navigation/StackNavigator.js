@@ -17,6 +17,7 @@ import BrandScreen from '../screens/Admin/Brand/BrandScreen';
 import BrandCreate from '../screens/Admin/Brand/BrandCreate';
 import AddAddress from '../screens/AddAddress';
 import AddressScreen from '../screens/AddressScreen';
+import BrandUpdate from '../screens/Admin/Brand/BrandUpdate';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -85,6 +86,7 @@ const StackNavigator = () => {
                 <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown: false }} />
 
                 <Stack.Screen name="BrandCreate" component={BrandCreate} options={{ headerShown: false }} />
+                <Stack.Screen name="BrandUpdate" component={BrandUpdate} options={({ route }) => ({ headerShown: route.params && route.params.showHeader ? route.params.showHeader : false })}  />
                 <Stack.Screen name="Brands" component={BrandScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="AddAddress" component={AddAddress} options={{ headerShown: false }} />
                 <Stack.Screen name="Addresses" component={AddressScreen} options={{ headerShown: false }} />
