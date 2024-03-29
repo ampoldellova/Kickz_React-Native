@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, ScrollView, TextInput, Pressable, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,7 +7,7 @@ import { SliderBox } from 'react-native-image-slider-box';
 import { BottomModal, ModalContent, SlideAnimation } from 'react-native-modals';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import baseurl from '../assets/common/baseurl';
@@ -17,7 +17,9 @@ const HomeScreen = () => {
   const [user, setUser] = useState("");
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState("");
+  const [brands, setBrands] = useState([]);
   const navigation = useNavigation();
+
   console.log(selectedAddress)
   useEffect(() => {
     const fetchUser = async () => {
@@ -51,35 +53,16 @@ const HomeScreen = () => {
     }
   };
 
-  // console.log("addresses", addresses);
+  const getAllBrands = async () => {
+    const { data: brands } = await axios.get(`${baseurl}get/brand`);
+    setBrands(brands);
+  };
 
-  const list = [
-    {
-      id: "0",
-      image: require("../assets/nike.png"),
-      name: "Nike",
-    },
-    {
-      id: "1",
-      image: require("../assets/adidas.png"),
-      name: "Adidas",
-    },
-    {
-      id: "2",
-      image: require("../assets/converse.png"),
-      name: "Converse",
-    },
-    {
-      id: "3",
-      image: require("../assets/newbalance.png"),
-      name: "New Balance",
-    },
-    {
-      id: "4",
-      image: require("../assets/vans.png"),
-      name: "Vans",
-    }
-  ]
+  useFocusEffect(
+    useCallback(() => {
+      getAllBrands();
+    }, [])
+  );
 
   const banners = [
     require("../assets/nikebanner.png"),
@@ -119,9 +102,9 @@ const HomeScreen = () => {
           </Pressable>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {list.map((item, index) => (
-              <Pressable key={index} style={{ margin: 10, justifyContent: "center", alignItems: "center" }}>
-                <Image style={{ width: 70, height: 70, resizeMode: "contain" }} source={item.image} />
+            {brands?.brand?.map((item, index) => (
+              <Pressable key={index} style={{ margin: 10, marginTop: -5, justifyContent: "center", alignItems: "center" }}>
+                <Image style={{ width: 70, height: 70, resizeMode: "contain" }} source={{ uri: item?.images[0] }} />
                 <Text style={{ textAlign: "center", fontSize: 12, fontWeight: "500" }}>{item?.name}</Text>
               </Pressable>
             ))}
