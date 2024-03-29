@@ -13,7 +13,7 @@ exports.getProducts = async (req, res) => {
 };
 
 exports.createProduct = async (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     req.body.images = await ImageFile.uploadMultiple({
       imageFiles: req.files,
@@ -31,4 +31,39 @@ exports.createProduct = async (req, res, next) => {
     console.log("error creating a product", error);
     res.status(500).json({ message: "Product Creation Failed" });
   }
+};
+
+exports.singleProduct = async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  console.log(product);
+  res.status(200).json({ product });
+};
+
+exports.updateProduct = async (req, res) => {
+  console.log(req.body);
+  try {
+    if (req.files?.length > 0) {
+      req.body.images = await ImageFile.uploadMultiple({
+        imageFiles: req.files,
+        request: req,
+      });
+    }
+
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res
+      .status(201)
+      .json({ success: true, message: "Product is Updated", product: product });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.deleteProduct = async (req, res) => {
+  await Product.findByIdAndDelete(req.params.id);
+  res.status(200).json({
+    message: "Producted Delete",
+  });
 };

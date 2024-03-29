@@ -23,7 +23,7 @@ export default function ListItems({ item, deleteBrand }) {
   );
 
   const handleEdit = (id) => {
-    navigation.navigate("BrandUpdate", id);
+    navigation.navigate("ProductUpdate", id);
   };
 
   return (

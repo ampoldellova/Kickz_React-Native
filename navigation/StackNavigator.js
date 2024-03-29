@@ -20,6 +20,7 @@ import AddressScreen from '../screens/AddressScreen';
 import BrandUpdate from '../screens/Admin/Brand/BrandUpdate';
 import ProductScreen from '../screens/Admin/Product/ProductScreen';
 import ProductCreate from '../screens/Admin/Product/ProductCreate';
+import ProductUpdate from '../screens/Admin/Product/ProductUpdate';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -96,6 +97,7 @@ const StackNavigator = () => {
                 
                 <Stack.Screen name="Products" component={ProductScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="ProductCreate" component={ProductCreate} options={{ headerShown: false }} />
+                <Stack.Screen name="ProductUpdate" component={ProductUpdate} options={({ route }) => ({ headerShown: route.params && route.params.showHeader ? route.params.showHeader : false })}  />
             </Stack.Navigator>
         </NavigationContainer>
     )
