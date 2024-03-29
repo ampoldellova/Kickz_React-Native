@@ -141,8 +141,9 @@ exports.addAddress = async (req, res, next) => {
     const { userId, address } = req.body;
 
     //find the user by the Userid
-    const user = await User.findById(userId);
-    // console.log(user)
+    const user = await User.findById(req.user._id);
+    console.log(user)
+    
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -153,7 +154,7 @@ exports.addAddress = async (req, res, next) => {
     //save the updated user in te backend
     await user.save();
 
-    res.status(200).json({ message: "Address added Successfully" });
+    res.status(200).json({ message: "Address created Successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error addding address" });
   }

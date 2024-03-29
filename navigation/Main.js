@@ -23,7 +23,6 @@ const Main = () => {
 
     return (
         <Tab.Navigator>
-
             <Tab.Screen
                 name="Home"
                 component={HomeScreen}

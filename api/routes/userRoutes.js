@@ -9,6 +9,6 @@ router.get("/verify/:token", verifyEmail);
 router.post("/login", login);
 router.get('/profile', isAuthenticated, userProfile);
 router.post('/address/create', isAuthenticated, addAddress)
-router.get('/addresses/:userId', isAuthenticated, userAddresses)
+router.get('/addresses/:id', isAuthenticated, userAddresses)
 
 module.exports = router;

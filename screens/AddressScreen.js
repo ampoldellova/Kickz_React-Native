@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, Pressable, Alert } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { jwtDecode } from "jwt-decode";
 import { UserType } from "../UserContext";
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import baseurl from '../assets/common/baseurl';
+import jwt_decode from "jwt-decode"
 
 const AddressScreen = () => {
     const navigation = useNavigation();
@@ -15,24 +15,22 @@ const AddressScreen = () => {
     const [street, setStreet] = useState("");
     const [landmark, setLandmark] = useState("");
     const [postalCode, setPostalCode] = useState("");
-    const { userId, setUserId } = useContext(UserType);
+    const [user, setUser] = useState("");
+    // const { userId, setUserId } = useContext(UserType);
 
     useEffect(() => {
-        try {
-            const fetchUser = async () => {
-                const token = await AsyncStorage.getItem("authToken");
-                console.log(jwtDecode(token))
-                const decodedToken = jwtDecode(token);
-                console.log(decodedToken)
-                const userId = decodedToken._id;
-                setUserId(userId)
-            }
-            
-            fetchUser();
-        } catch (error) {
-            console.log(error)
+        const fetchUser = async () => {
+            const token = await AsyncStorage.getItem("authToken");
+            setUser(token)
+
+            // const decodedToken = jwt_decode(token);
+            // const userId = decodedToken.userId;
+            // setUserId(userId)
         }
+
+        fetchUser();
     }, []);
+
 
 
     const handleAddAddress = () => {
@@ -45,7 +43,14 @@ const AddressScreen = () => {
             postalCode
         }
 
-        axios.post(`${baseurl}address/create`, { userId, address }).then((response) => {
+        const config = {
+            headers: {
+                Authorization: `${user}`,
+            },
+        };
+
+
+        axios.post(`${baseurl}address/create`, { address }, config).then((response) => {
             Alert.alert("Success", "Addresses added successfully");
             setName("");
             setMobileNo("");
