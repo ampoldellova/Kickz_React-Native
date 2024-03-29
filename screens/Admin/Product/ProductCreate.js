@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setFormData, setImageUpload } from "../../../utils/formData";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { Select } from "native-base";
+import { ScrollView, Select } from "native-base";
 import { Button } from "native-base";
 
 import { FontAwesome } from "@expo/vector-icons";
@@ -106,128 +106,268 @@ const ProductCreate = () => {
   );
 
   return (
-    <View>
-      <Text>Brand Create</Text>
+    <ScrollView style={{ marginTop: 50 }}>
+      <View style={{ padding: 10 }}>
 
-      <Text style={{ marginLeft: 10 }}>Name</Text>
-      <TextInput
-        value={name}
-        style={styles.input}
-        onChangeText={(text) => setName(text)}
-        placeholder="Brand Name"
-      />
+        {/* <Text style={{ marginLeft: 10 }}>Name</Text>
+        <TextInput
+          value={name}
+          style={styles.input}
+          onChangeText={(text) => setName(text)}
+          placeholder="Brand Name"
+        /> */}
 
-      <Select
-        width="80%"
-        style={{ width: undefined }}
-        selectedValue={brand}
-        placeholder="Select Brand"
-        placeholderStyle={{ color: "#007aff" }}
-        placeholderIconColor="#007aff"
-        onValueChange={(e) => setBrand(e)}
-      >
-        {brandName.map((c) => {
-          return <Select.Item key={c._id} label={c.name} value={c._id} />;
-        })}
-      </Select>
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+            Shoe name
+          </Text>
 
-      <Text style={{ marginLeft: 10 }}>Price</Text>
-      <TextInput
-        value={price}
-        keyboardType="numeric"
-        style={styles.input}
-        onChangeText={(text) => setPrice(text)}
-        placeholder="Price"
-        maxLength={5}
-      />
+          <TextInput
+            value={name}
+            onChangeText={(text) => setName(text)}
+            placeholderTextColor={"gray"}
+            style={{
+              padding: 10,
+              borderColor: "#D0D0D0",
+              borderWidth: 1,
+              marginTop: 10,
+              borderRadius: 5,
+            }}
+            placeholder="Enter product name"
+          />
+        </View>
 
-      <Text style={{ marginLeft: 10 }}>Description</Text>
-      <TextInput
-        value={description}
-        style={styles.input}
-        onChangeText={(text) => setDescription(text)}
-        placeholder="Brand Description"
-      />
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold", marginBottom: 10 }}>
+            Shoe type
+          </Text>
 
-      <Text style={{ marginLeft: 10 }}>Size</Text>
-      <TextInput
-        value={size}
-        keyboardType="numeric"
-        style={styles.input}
-        onChangeText={(text) => setSize(text)}
-        placeholder="Size"
-        maxLength={2}
-      />
+          <Select
+            width="100%"
+            selectedValue={brand}
+            placeholder="Select shoe type"
+            placeholderTextColor={"gray"}
+            style={{ fontSize: 15, borderColor: "#D0D0D0", padding: 10 }}
+            onValueChange={(e) => setBrand(e)}
+          >
+            {brandName.map((c) => {
+              return <Select.Item key={c._id} label={c.name} value={c._id} />;
+            })}
+          </Select>
+        </View>
 
-      <Select
-        width="80%"
-        style={{ width: undefined }}
-        selectedValue={type}
-        placeholder="Select Type"
-        placeholderStyle={{ color: "#007aff" }}
-        placeholderIconColor="#007aff"
-        onValueChange={(e) => setType(e)}
-      >
-        <Select.Item
-          key={"High-tops"}
-          label={"High-tops"}
-          value={"High-tops"}
-        />
-        ;
-        <Select.Item key={"Mid-cut"} label={"Mid-cut"} value={"Mid-cut"} />;
-        <Select.Item key={"Low-tops"} label={"Low-tops"} value={"Low-tops"} />;
-        <Select.Item key={"Slip-ons"} label={"Slip-ons"} value={"Slip-ons"} />;
-      </Select>
+        {/* <Text style={{ marginLeft: 10 }}>Price</Text>
+        <TextInput
+          value={price}
+          keyboardType="numeric"
+          style={styles.input}
+          onChangeText={(text) => setPrice(text)}
+          placeholder="Price"
+          maxLength={5}
+        /> */}
 
-      <Text style={{ marginLeft: 10 }}>Color Way</Text>
-      <TextInput
-        value={colorway}
-        style={styles.input}
-        onChangeText={(text) => setColorway(text)}
-        placeholder="Color Way"
-      />
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+            Shoe Price
+          </Text>
 
-      <Text style={{ marginLeft: 10 }}>Stock</Text>
-      <TextInput
-        value={stock}
-        keyboardType="numeric"
-        style={styles.input}
-        onChangeText={(text) => setStock(text)}
-        placeholder="Stock"
-        maxLength={5}
-      />
+          <TextInput
+            value={price}
+            onChangeText={(text) => setPrice(text)}
+            placeholderTextColor={"gray"}
+            style={{
+              padding: 10,
+              borderColor: "#D0D0D0",
+              borderWidth: 1,
+              marginTop: 10,
+              borderRadius: 5,
+            }}
+            placeholder="Enter shoe price"
+          />
+        </View>
 
-      <Button
-        colorScheme="secondary"
-        onPress={pickImage}
-        style={{ marginLeft: 10 }}
-      >
-        <Text style={{ color: "white", fontWeight: "bold" }}>Pick Image</Text>
-      </Button>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 10 }}>
-        {images.map((image, index) => (
-          <View key={index} style={{ flexDirection: "row", margin: 7 }}>
-            <Image
-              source={{ uri: image }}
-              style={{ width: 100, height: 100, margin: 5 }}
+        {/* <Text style={{ marginLeft: 10 }}>Description</Text>
+        <TextInput
+          value={description}
+          style={styles.input}
+          onChangeText={(text) => setDescription(text)}
+          placeholder="Brand Description"
+        /> */}
+
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+            Shoe Description
+          </Text>
+
+          <TextInput
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+            placeholderTextColor={"gray"}
+            style={{
+              padding: 10,
+              borderColor: "#D0D0D0",
+              borderWidth: 1,
+              marginTop: 10,
+              borderRadius: 5,
+            }}
+            placeholder="Enter shoe description"
+          />
+        </View>
+
+        {/* <Text style={{ marginLeft: 10 }}>Size</Text>
+        <TextInput
+          value={size}
+          keyboardType="numeric"
+          style={styles.input}
+          onChangeText={(text) => setSize(text)}
+          placeholder="Size"
+          maxLength={2}
+        /> */}
+
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+            Shoe size
+          </Text>
+
+          <TextInput
+            value={size}
+            keyboardType="numeric"
+            maxLength={2}
+            onChangeText={(text) => setSize(text)}
+            placeholderTextColor={"gray"}
+            style={{
+              padding: 10,
+              borderColor: "#D0D0D0",
+              borderWidth: 1,
+              marginTop: 10,
+              borderRadius: 5,
+            }}
+            placeholder="Enter shoe size"
+          />
+        </View>
+
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+            Shoe type
+          </Text>
+
+          <Select
+            width="100%"
+            selectedValue={type}
+            placeholder="Select shoe type"
+            placeholderTextColor={"gray"}
+            style={{ fontSize: 15, borderColor: "#D0D0D0", padding: 10 }}
+            onValueChange={(e) => setType(e)}
+          >
+            <Select.Item
+              key={"High-tops"}
+              label={"High-tops"}
+              value={"High-tops"}
             />
-            <TouchableOpacity onPress={() => removeImage(index)}>
-              <FontAwesome
-                name="remove"
-                size={24}
-                color="red"
-                style={{ marginLeft: 6 }}
+            <Select.Item key={"Mid-cut"} label={"Mid-cut"} value={"Mid-cut"} />;
+            <Select.Item key={"Low-tops"} label={"Low-tops"} value={"Low-tops"} />;
+            <Select.Item key={"Slip-ons"} label={"Slip-ons"} value={"Slip-ons"} />;
+          </Select>
+        </View>
+
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+            Shoe color
+          </Text>
+
+          <TextInput
+            value={colorway}
+            onChangeText={(text) => setColorway(text)}
+            placeholderTextColor={"gray"}
+            style={{
+              padding: 10,
+              borderColor: "#D0D0D0",
+              borderWidth: 1,
+              marginTop: 10,
+              borderRadius: 5,
+            }}
+            placeholder="Enter shoe color"
+          />
+        </View>
+
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+            Stock
+          </Text>
+
+          <TextInput
+            value={stock}
+            keyboardType="numeric"
+            maxLength={5}
+            onChangeText={(text) => setStock(text)}
+            placeholderTextColor={"gray"}
+            style={{
+              padding: 10,
+              borderColor: "#D0D0D0",
+              borderWidth: 1,
+              marginTop: 10,
+              borderRadius: 5,
+            }}
+            placeholder="Enter stock of shoe"
+          />
+        </View>
+        {/* <Text style={{ marginLeft: 10 }}>Color Way</Text>
+        <TextInput
+          value={colorway}
+          style={styles.input}
+          onChangeText={(text) => setColorway(text)}
+          placeholder="Color Way"
+        /> */}
+
+        {/* <Text style={{ marginLeft: 10 }}>Stock</Text>
+        <TextInput
+          value={stock}
+          keyboardType="numeric"
+          style={styles.input}
+          onChangeText={(text) => setStock(text)}
+          placeholder="Stock"
+          maxLength={5}
+        /> */}
+
+        <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 10 }}>
+          {images.map((image, index) => (
+            <View key={index} style={{ flexDirection: "row", margin: 7 }}>
+              <Image
+                source={{ uri: image }}
+                style={{ width: 100, height: 100, margin: 5 }}
               />
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <Button onPress={addProduct}>
-          <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
+              <TouchableOpacity onPress={() => removeImage(index)}>
+                <FontAwesome
+                  name="remove"
+                  size={24}
+                  color="red"
+                  style={{ marginLeft: -30, marginTop: 7 }}
+                />
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+
+        <Button
+          colorScheme="secondary"
+          onPress={pickImage}
+          style={{ width: "100%", marginTop: 10 }}
+        >
+          <Text style={{ color: "white", fontWeight: "bold" }}>Pick Image</Text>
         </Button>
+
+        {/* Conditionally render the submit button */}
+        {images.length > 0 && (
+          <View style={{ alignItems: "center" }}>
+            <Button onPress={addProduct} style={{ width: "100%", marginTop: 10 }}>
+              <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
+            </Button>
+          </View>
+        )}
+
       </View>
-    </View>
+
+    </ScrollView>
   );
 };
 

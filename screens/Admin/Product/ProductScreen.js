@@ -26,13 +26,13 @@ const ProductScreen = () => {
 
   const getAllproduct = async () => {
     const { data } = await axios.get(`${baseurl}get/products`);
-  console.log(data.product.brand)
+    console.log(data.product.brand)
     setItems(data.product);
   };
 
   useFocusEffect(
     useCallback(() => {
-        getAllproduct();
+      getAllproduct();
       handleSearch("");
     }, [])
   );
@@ -73,28 +73,30 @@ const ProductScreen = () => {
           <Text color={"gray.500"}>Add New</Text>
         </Button>
       </Box>
-      <DataTable style={{}}>
-        <DataTable.Header>
-          <DataTable.Title>Image</DataTable.Title>
-          <DataTable.Title>Name</DataTable.Title>
-          <DataTable.Title>Price</DataTable.Title>
-          <DataTable.Title>Description</DataTable.Title>
-          <DataTable.Title>Size</DataTable.Title>
-          <DataTable.Title>Type</DataTable.Title>
-          <DataTable.Title>Color Way</DataTable.Title>
-          <DataTable.Title>Stock</DataTable.Title>
-          <DataTable.Title>Brand</DataTable.Title>
-        </DataTable.Header>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <DataTable style={{}}>
+          <DataTable.Header>
+            <DataTable.Title style={{ width: 100 }}>Image</DataTable.Title>
+            <DataTable.Title style={{ width: 100 }}>Name</DataTable.Title>
+            <DataTable.Title style={{ width: 80 }}>Price</DataTable.Title>
+            {/* <DataTable.Title style={{ width: 200 }}>Description</DataTable.Title> */}
+            <DataTable.Title style={{ width: 50 }}>Size</DataTable.Title>
+            <DataTable.Title style={{ width: 100 }}>Type</DataTable.Title>
+            <DataTable.Title style={{ width: 100 }}>Color Way</DataTable.Title>
+            <DataTable.Title style={{ width: 80 }}>Stock</DataTable.Title>
+            <DataTable.Title style={{ width: 100 }}>Brand</DataTable.Title>
+          </DataTable.Header>
 
-        <View style={{ maxHeight: "73%" }}>
-          <ScrollView>
-            {/* {filteredItems.slice(from, to).map((item, i) => ( */}
-            {items.map((item, i) => (
-              <ListItems item={item} key={i} deleteBrand={deleteBrand} />
-            ))}
-          </ScrollView>
-        </View>
-      </DataTable>
+          <View style={{ maxHeight: "73%" }}>
+            <ScrollView>
+              {/* {filteredItems.slice(from, to).map((item, i) => ( */}
+              {items.map((item, i) => (
+                <ListItems item={item} key={i} deleteBrand={deleteBrand} />
+              ))}
+            </ScrollView>
+          </View>
+        </DataTable>
+      </ScrollView>
     </View>
   );
 };
