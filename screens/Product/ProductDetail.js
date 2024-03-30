@@ -1,13 +1,27 @@
 import { StyleSheet, Text, View, ScrollView, Dimensions, ImageBackground, Image, Pressable } from 'react-native'
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../redux/CartReducer';
 
 const ProductDetail = () => {
     const route = useRoute();
+    const [addedToCart, setAddedToCart] = useState(false);
     const { width } = Dimensions.get("window");
     const height = (width * 100) / 100;
-    
+    const dispatch = useDispatch();
+    const addItemToCart = (item) => {
+        setAddedToCart(true);
+        dispatch(addToCart(item));
+        setTimeout(() => {
+            setAddedToCart(false);
+        }, 60000);
+    };
+
+    const cart = useSelector((state) => state.cart.cart);
+    console.log(cart);
+
     return (
         <ImageBackground source={require("../../assets/homeBackground.png")} style={styles.background}>
             <ScrollView style={{ marginTop: 40, flex: 1 }} showsVerticalScrollIndicator={false}>
@@ -89,8 +103,18 @@ const ProductDetail = () => {
                     }}
                 >
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                        <Ionicons name="cart-outline" size={24} color="white" />
-                        <Text style={{ color: "white", fontSize: 14, fontWeight: "bold" }}>Add to Cart</Text>
+                        {addedToCart ? (
+                            <Ionicons name="cart-sharp" size={24} color="white" />
+                        ) : (
+                            <Ionicons name="cart-outline" size={24} color="white" />
+                        )}
+                        <Text style={{ color: "white", fontSize: 14, fontWeight: "bold" }}>
+                            {addedToCart ? (
+                                <Text>Added to Cart</Text>
+                            ) : (
+                                <Text>Add to Cart</Text>
+                            )}
+                        </Text>
                     </View>
                 </Pressable>
             </ScrollView>
