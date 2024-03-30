@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import baseurl from '../assets/common/baseurl';
 import Products from './Product/Products';
+import { useSelector } from 'react-redux';
 
 const HomeScreen = () => {
   const [modal, setModal] = useState(false);
@@ -22,6 +23,7 @@ const HomeScreen = () => {
   const [brands, setBrands] = useState([]);
   const [products, setProducts] = useState([]);
   const navigation = useNavigation();
+  const cart = useSelector((state) => state.cart.cart);
 
   useEffect(() => {
     const fetchUser = async () => {
