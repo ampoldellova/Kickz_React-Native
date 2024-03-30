@@ -1,8 +1,11 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { FontAwesome6 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Products = ({ item }) => {
+    const navigation = useNavigation();
+
     return (
         <Pressable style={{ marginHorizontal: 5, marginVertical: 5, borderWidth: 1, borderRadius: 10, padding: 10, borderColor: "black", backgroundColor: "white" }}>
             <Image
@@ -29,6 +32,21 @@ const Products = ({ item }) => {
                 flexWrap: "wrap",
             }}>
                 <Pressable
+                    onPress={() => navigation.navigate("ProductDetail", {
+                        _id: item?.id,
+                        name: item?.name,
+                        price: item?.price,
+                        description: item?.description,
+                        ratings: item?.ratings,
+                        images: item?.images,
+                        size: item?.size,
+                        colorway: item?.colorway,
+                        brand: item?.brand.name,
+                        brandImage: item?.brand.images,
+                        type: item?.type,
+                        stock: item?.stock,
+                        item: item
+                    })}
                     style={{
                         width: 105,
                         backgroundColor: "#0F0F0F",
@@ -53,8 +71,8 @@ const Products = ({ item }) => {
                 >
                     <FontAwesome6 name="add" size={14} color="black" />
                 </Pressable>
-            </View>
-        </Pressable>
+            </View >
+        </Pressable >
     )
 }
 
