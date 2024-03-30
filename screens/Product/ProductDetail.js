@@ -7,6 +7,7 @@ const ProductDetail = () => {
     const route = useRoute();
     const { width } = Dimensions.get("window");
     const height = (width * 100) / 100;
+    
     return (
         <ImageBackground source={require("../../assets/homeBackground.png")} style={styles.background}>
             <ScrollView style={{ marginTop: 40, flex: 1 }} showsVerticalScrollIndicator={false}>

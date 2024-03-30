@@ -6,19 +6,19 @@ import { ModalPortal } from "react-native-modals";
 import DrawerNavigation from "./navigation/DrawerNavigation";
 import StackNavigator from "./navigation/StackNavigator";
 import { UserContext } from "./UserContext";
-import { Provider } from "react-redux";
-import store from "./redux/store";
 
 export default function App() {
   return (
     <>
-      <Provider store={store}>
-        <UserContext>
-          <StackNavigator />
-          {/* <DrawerNavigation /> */}
-          <ModalPortal />
-        </UserContext>
-      </Provider>
+      <NativeBaseProvider>
+        <PaperProvider>
+          <UserContext>
+            <StackNavigator />
+            {/* <DrawerNavigation /> */}
+            <ModalPortal />
+          </UserContext>
+        </PaperProvider>
+      </NativeBaseProvider>
     </>
   );
 }
