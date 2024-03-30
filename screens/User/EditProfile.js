@@ -102,10 +102,7 @@ const EditProfile = () => {
     axios
       .put(`${baseurl}update/user/profile`, formData, config)
       .then((res) => {
-        setName("");
-        setEmail("");
-        setImage("");
-        navigation.navigate("Profile");
+        navigation.goBack();
       })
       .catch((error) => console.log(error.response));
   };
@@ -176,14 +173,16 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#1E90FF",
+    backgroundColor: "#0F0F0F",
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
   buttonText: {
-    color: "#fff",
+    color: "white",
+    textAlign: "center",
     fontSize: 18,
+    fontWeight: "bold"
   },
   avatarContainer: {
     marginTop: 20,

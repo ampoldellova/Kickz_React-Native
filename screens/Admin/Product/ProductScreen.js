@@ -53,16 +53,6 @@ const ProductScreen = () => {
     <View>
       <Text>BrandScreen</Text>
       <Box style={{ with: width / 2.5 }}>
-        <Input
-          onChangeText={(value) => handleSearch(value)}
-          width={"85%"}
-          placeholder="Search"
-          leftElement={
-            <View style={{ marginHorizontal: 10, marginRight: -5 }}>
-              <SearchIcon />
-            </View>
-          }
-        />
         <Button
           variant={"outline"}
           size={"xs"}
