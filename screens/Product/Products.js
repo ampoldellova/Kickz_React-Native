@@ -1,10 +1,24 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { FontAwesome6 } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../redux/CartReducer';
 
 const Products = ({ item }) => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
+    const [addedToCart, setAddedToCart] = useState(false);
+    const addItemToCart = (item) => {
+        setAddedToCart(true);
+        dispatch(addToCart(item));
+        setTimeout(() => {
+            setAddedToCart(false);
+        }, 60000);
+    };
+
+    const cart = useSelector((state) => state.cart.cart);
+    console.log("CartItems", cart);
 
     return (
         <Pressable style={{ marginHorizontal: 5, marginVertical: 5, borderWidth: 1, borderRadius: 10, padding: 10, borderColor: "black", backgroundColor: "white" }}>
@@ -61,6 +75,7 @@ const Products = ({ item }) => {
                 </Pressable>
 
                 <Pressable
+                    onPress={() => addItemToCart(item)}
                     style={{
                         borderWidth: 1,
                         padding: 9,

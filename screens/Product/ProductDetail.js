@@ -7,10 +7,10 @@ import { addToCart } from '../../redux/CartReducer';
 
 const ProductDetail = () => {
     const route = useRoute();
-    const [addedToCart, setAddedToCart] = useState(false);
     const { width } = Dimensions.get("window");
     const height = (width * 100) / 100;
     const dispatch = useDispatch();
+    const [addedToCart, setAddedToCart] = useState(false);
     const addItemToCart = (item) => {
         setAddedToCart(true);
         dispatch(addToCart(item));
@@ -20,7 +20,7 @@ const ProductDetail = () => {
     };
 
     const cart = useSelector((state) => state.cart.cart);
-    console.log(cart);
+    console.log("CartItems", cart);
 
     return (
         <ImageBackground source={require("../../assets/homeBackground.png")} style={styles.background}>
