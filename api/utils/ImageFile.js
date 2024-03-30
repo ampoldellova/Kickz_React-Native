@@ -3,6 +3,7 @@ const path = 'public/uploads/'
 const uploadSingle = async ({ imageFile, request }) => {
 
     const basePath = `${request.protocol}://${request.get('host')}/${path}`;
+    return `${basePath}${image.filename}`
 
 }
 

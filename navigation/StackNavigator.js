@@ -22,6 +22,7 @@ import ProductScreen from '../screens/Admin/Product/ProductScreen';
 import ProductCreate from '../screens/Admin/Product/ProductCreate';
 import ProductUpdate from '../screens/Admin/Product/ProductUpdate';
 import ProductDetail from '../screens/Product/ProductDetail';
+import EditProfile from '../screens/User/EditProfile';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -84,6 +85,7 @@ const StackNavigator = () => {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }} />
                 <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: false }} />

@@ -85,6 +85,10 @@ const ProfileScreen = () => {
 
       <View style={styles.buttonContainer}>
         <Pressable
+          onPress={() => {
+            navigation.navigate("EditProfile");
+            console.log("90");
+          }}
           style={{
             width: 150,
             backgroundColor: "#99D5F3",
@@ -188,7 +192,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     resizeMode: "cover",
-    marginTop: 35
+    marginTop: 35,
   },
   avatarContainer: {
     alignItems: "center",
