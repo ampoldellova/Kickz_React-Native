@@ -28,7 +28,7 @@ const OrderSuccess = () => {
             <Text
                 style={{
                     marginTop: 20,
-                    fontSize: 19,
+                    fontSize: 20,
                     fontWeight: "600",
                     textAlign: "center",
                 }}
