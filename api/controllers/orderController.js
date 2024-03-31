@@ -1,5 +1,37 @@
 const User = require("../models/user");
 const Order = require("../models/order");
+const nodemailer = require("nodemailer");
+
+const sendOrderNotification = async (email, products, order) => {
+    //create a nodemailer transport
+
+    const transporter = nodemailer.createTransport({
+        //configure the email service
+        host: "sandbox.smtp.mailtrap.io",
+        port: 2525,
+        auth: {
+            user: "923f1b4fe759c5",
+            pass: "bffdcf9078b243",
+        },
+    });
+
+    //compose the email message
+    const mailOptions = {
+        from: 'kickz@gmail.com',
+        to: email,
+        subject: "Order Notification",
+    };
+    const productText = products.map(product => `- ${product.name} x${product.quantity}`).join('\n');
+
+    mailOptions.text = `Thank you for ordering from kickz! \n\nThis is the list of items you've ordered:\n${productText}\n\nPayment Method: ${order.paymentMethod}\nOrder Total:₱ ${order.totalPrice}`;
+
+    //send the email
+    try {
+        await transporter.sendMail(mailOptions);
+    } catch (error) {
+        console.log("Error sending verification email", error);
+    }
+};
 
 exports.placeOrder = async (req, res, next) => {
     try {
@@ -29,6 +61,7 @@ exports.placeOrder = async (req, res, next) => {
 
         await order.save();
         await User.findByIdAndUpdate(req.user._id, { orders: order._id }, { new: true })
+        sendOrderNotification(req.user.email, products, order)
 
         res.status(200).json({ message: "Order created successfully!" });
     } catch (error) {
