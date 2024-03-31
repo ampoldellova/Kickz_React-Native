@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { cleanCart } from '../../redux/CartReducer';
 import { useNavigation } from '@react-navigation/native';
+import RazorpayCheckout from 'react-native-razorpay';
 
 const ConfirmationScreen = () => {
     const [currentStep, setCurrentStep] = useState(0);
@@ -77,8 +78,8 @@ const ConfirmationScreen = () => {
 
             const response = await axios.post(`${baseurl}order`, orderData, config);
             if (response.status === 200) {
-                // Alert.alert("Order", "Order created successfully")
                 navigation.navigate("OrderSuccess");
+                setCurrentStep(0)
                 dispatch(cleanCart());
                 console.log("Order created successfully", response.data);
             } else {

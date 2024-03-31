@@ -60,7 +60,7 @@ exports.placeOrder = async (req, res, next) => {
         });
 
         await order.save();
-        await User.findByIdAndUpdate(req.user._id, { orders: order._id }, { new: true })
+        await User.findByIdAndUpdate(req.user._id, { $push: { orders: order._id } }, { new: true })
         sendOrderNotification(req.user.email, products, order)
 
         res.status(200).json({ message: "Order created successfully!" });
