@@ -25,6 +25,8 @@ import ProductDetail from '../screens/Product/ProductDetail';
 import EditProfile from '../screens/User/EditProfile';
 import ConfirmationScreen from '../screens/Cart/ConfirmationScreen';
 import OrderScreen from '../screens/Order/OrderScreen';
+import UserScreen from '../screens/Admin/Users/UserScreen';
+import UserUpdate from '../screens/Admin/Users/UserUpdate';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -108,6 +110,8 @@ const StackNavigator = () => {
                 <Stack.Screen name="ConfirmOrder" component={ConfirmationScreen} options={{ headerShown: false }} />
 
                 <Stack.Screen name="Orders" component={OrderScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="User" component={UserScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="UserUpdate" component={UserUpdate} options={({ route }) => ({ headerShown: route.params && route.params.showHeader ? route.params.showHeader : false })} />
             </Stack.Navigator>
         </NavigationContainer>
     )
