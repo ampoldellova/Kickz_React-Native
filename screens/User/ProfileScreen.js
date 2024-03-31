@@ -131,49 +131,73 @@ const ProfileScreen = () => {
       </View>
 
       {user && user.role === "admin" ? (
-        <View style={styles.buttonContainer}>
-          <Pressable
-            onPress={gotoBrands}
-            style={{
-              width: 150,
-              backgroundColor: "#0F0F0F",
-              borderRadius: 10,
-              padding: 15,
-            }}
-          >
-            <Text
+        <>
+          <View style={styles.buttonContainer}>
+            <Pressable
+              onPress={gotoBrands}
               style={{
-                textAlign: "center",
-                color: "white",
-                fontSize: 16,
-                fontWeight: "bold",
+                width: 150,
+                backgroundColor: "#0F0F0F",
+                borderRadius: 10,
+                padding: 15,
               }}
             >
-              Brands
-            </Text>
-          </Pressable>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                }}
+              >
+                Brands
+              </Text>
+            </Pressable>
 
-          <Pressable
-            onPress={gotoProducts}
-            style={{
-              width: 150,
-              backgroundColor: "#0F0F0F",
-              borderRadius: 10,
-              padding: 15,
-            }}
-          >
-            <Text
+            <Pressable
+              onPress={gotoProducts}
               style={{
-                textAlign: "center",
-                color: "white",
-                fontSize: 16,
-                fontWeight: "bold",
+                width: 150,
+                backgroundColor: "#0F0F0F",
+                borderRadius: 10,
+                padding: 15,
               }}
             >
-              Products
-            </Text>
-          </Pressable>
-        </View>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                }}
+              >
+                Products
+              </Text>
+            </Pressable>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Pressable
+              onPress={() => navigation.navigate("User")}
+              style={{
+                width: 150,
+                backgroundColor: "#0F0F0F",
+                borderRadius: 10,
+                padding: 15,
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                }}
+              >
+                Users
+              </Text>
+            </Pressable>
+          </View>
+        </>
       ) : (
         <></>
       )}
@@ -214,6 +238,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 20,
-    marginTop: 30,
+    marginTop: 20,
   },
+
 });

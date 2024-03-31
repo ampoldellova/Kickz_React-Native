@@ -23,6 +23,8 @@ import ProductCreate from '../screens/Admin/Product/ProductCreate';
 import ProductUpdate from '../screens/Admin/Product/ProductUpdate';
 import ProductDetail from '../screens/Product/ProductDetail';
 import EditProfile from '../screens/User/EditProfile';
+import UserScreen from '../screens/Admin/Users/UserScreen';
+import UserUpdate from '../screens/Admin/Users/UserUpdate';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -102,6 +104,9 @@ const StackNavigator = () => {
                 <Stack.Screen name="ProductCreate" component={ProductCreate} options={{ headerShown: false }} />
                 <Stack.Screen name="ProductUpdate" component={ProductUpdate} options={({ route }) => ({ headerShown: route.params && route.params.showHeader ? route.params.showHeader : false })} />
                 <Stack.Screen name="ProductDetail" component={ProductDetail} options={{ headerShown: false }} />
+
+                <Stack.Screen name="User" component={UserScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="UserUpdate" component={UserUpdate} options={({ route }) => ({ headerShown: route.params && route.params.showHeader ? route.params.showHeader : false })} />
             </Stack.Navigator>
         </NavigationContainer>
     )

@@ -176,26 +176,90 @@ exports.userAddresses = async (req, res, next) => {
 };
 
 exports.userProfileUpdate = async (req, res) => {
-  // console.log(req.files);
   try {
     if (req.files?.length > 0) {
       req.body.image = await ImageFile.uploadMultiple({
         imageFiles: req.files,
         request: req,
       });
-    }
-    console.log(req.body);
-
-    await User.findByIdAndUpdate(
-      req.user._id,
-      { name: req.body.name, email: req.body.email, image: req.body.image[0] },
-      {
+      await User.findByIdAndUpdate(
+        req.user._id,
+        {
+          name: req.body.name,
+          email: req.body.email,
+          image: req.body.image[0],
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      res.status(201).json({ success: true, message: "User is Updated" });
+    } else {
+      await User.findByIdAndUpdate(req.user._id, req.body, {
         new: true,
         runValidators: true,
-      }
-    );
-    res.status(201).json({ success: true, message: "User is Updated" });
+      });
+      res.status(201).json({ success: true, message: "User is Updated" });
+    }
   } catch (err) {
     console.log(err);
   }
+};
+
+exports.getAllUsers = async (req, res) => {
+  console.log(req.user._id);
+  const user = await User.find({ _id: { $ne: req.user._id } });
+  console.log(user);
+
+  res.status(200).json({
+    user,
+  });
+};
+
+exports.UserInfo = async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  res.status(200).json({
+    user,
+  });
+};
+
+exports.userInfoUpdate = async (req, res) => {
+  try {
+    if (req.files?.length > 0) {
+      req.body.image = await ImageFile.uploadMultiple({
+        imageFiles: req.files,
+        request: req,
+      });
+      await User.findByIdAndUpdate(
+        req.params.id,
+        {
+          name: req.body.name,
+          email: req.body.email,
+          image: req.body.image[0],
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      res.status(201).json({ success: true, message: "User is Updated" });
+    } else {
+      await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      res.status(201).json({ success: true, message: "User is Updated" });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.DeleteUser = async (req, res) => {
+  await User.findByIdAndDelete(req.params.id);
+  res.status(200).json({
+    message: "User Deleted",
+  });
 };
