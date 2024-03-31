@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require('../utils/multer');
+
 const { login, register, verifyEmail, userProfile, addAddress, userAddresses, userProfileUpdate } = require("../controllers/UserController");
 const { isAuthenticated } = require('../middlewares/Auth');
 

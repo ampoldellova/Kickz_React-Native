@@ -12,7 +12,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileScreen from '../screens/User/ProfileScreen';
-import CartScreen from '../screens/CartScreen';
+import CartScreen from '../screens/Cart/CartScreen';
 import BrandScreen from '../screens/Admin/Brand/BrandScreen';
 import BrandCreate from '../screens/Admin/Brand/BrandCreate';
 import AddAddress from '../screens/AddAddress';

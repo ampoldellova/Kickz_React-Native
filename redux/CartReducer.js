@@ -18,24 +18,24 @@ export const CartSlice = createSlice({
         },
         removeFromCart: (state, action) => {
             const removeItem = state.cart.filter(
-                (item) => item._id !== action.payload.id
+                (item) => item._id !== action.payload._id
             );
             state.cart = removeItem;
         },
         incementQuantity: (state, action) => {
             const itemPresent = state.cart.find(
-                (item) => item._id === action.payload.id
+                (item) => item._id === action.payload._id
             );
             itemPresent.quantity++;
         },
         decrementQuantity: (state, action) => {
             const itemPresent = state.cart.find(
-                (item) => item._id === action.payload.id
+                (item) => item._id === action.payload._id
             );
             if (itemPresent.quantity === 1) {
                 itemPresent.quantity = 0;
                 const removeItem = state.cart.filter(
-                    (item) => item._id !== action.payload.id
+                    (item) => item._id !== action.payload._id
                 );
                 state.cart = removeItem;
             } else {

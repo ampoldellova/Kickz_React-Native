@@ -12,7 +12,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ProfileScreen from '../screens/User/ProfileScreen';
-import CartScreen from '../screens/CartScreen';
+import CartScreen from '../screens/Cart/CartScreen';
 import BrandScreen from '../screens/Admin/Brand/BrandScreen';
 import BrandCreate from '../screens/Admin/Brand/BrandCreate';
 import AddAddress from '../screens/AddAddress';
@@ -23,6 +23,8 @@ import ProductCreate from '../screens/Admin/Product/ProductCreate';
 import ProductUpdate from '../screens/Admin/Product/ProductUpdate';
 import ProductDetail from '../screens/Product/ProductDetail';
 import EditProfile from '../screens/User/EditProfile';
+import ConfirmationScreen from '../screens/Cart/ConfirmationScreen';
+import OrderScreen from '../screens/Order/OrderScreen';
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -88,7 +90,6 @@ const StackNavigator = () => {
                 <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }} />
                 <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Main" component={BottomTabs} options={{ headerShown: false }} />
 
                 <Stack.Screen name="BrandCreate" component={BrandCreate} options={{ headerShown: false }} />
@@ -102,6 +103,11 @@ const StackNavigator = () => {
                 <Stack.Screen name="ProductCreate" component={ProductCreate} options={{ headerShown: false }} />
                 <Stack.Screen name="ProductUpdate" component={ProductUpdate} options={({ route }) => ({ headerShown: route.params && route.params.showHeader ? route.params.showHeader : false })} />
                 <Stack.Screen name="ProductDetail" component={ProductDetail} options={{ headerShown: false }} />
+
+                <Stack.Screen name="Cart" component={CartScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="ConfirmOrder" component={ConfirmationScreen} options={{ headerShown: false }} />
+
+                <Stack.Screen name="Orders" component={OrderScreen} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     )
