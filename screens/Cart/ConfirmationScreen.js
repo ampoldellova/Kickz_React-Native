@@ -77,8 +77,8 @@ const ConfirmationScreen = () => {
 
             const response = await axios.post(`${baseurl}order`, orderData, config);
             if (response.status === 200) {
-                Alert.alert("Order", "Order created successfully")
-                navigation.navigate("Orders");
+                // Alert.alert("Order", "Order created successfully")
+                navigation.navigate("OrderSuccess");
                 dispatch(cleanCart());
                 console.log("Order created successfully", response.data);
             } else {
@@ -117,14 +117,17 @@ const ConfirmationScreen = () => {
                 paymentMethod: "card",
             };
 
-            const response = await axios.post(
-                "http://localhost:8000/orders",
-                orderData
-            );
+            const config = {
+                headers: {
+                    Authorization: `${user}`,
+                },
+            };
+
+            const response = await axios.post(`${baseurl}order`, orderData, config);
             if (response.status === 200) {
                 navigation.navigate("Order");
                 dispatch(cleanCart());
-                console.log("order created successfully", response.data);
+                console.log("Order created successfully", response.data);
             } else {
                 console.log("error creating order", response.data);
             }
