@@ -4,12 +4,20 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/CartReducer';
+import Toast from 'react-native-toast-message';
 
 const Products = ({ item }) => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
     const [addedToCart, setAddedToCart] = useState(false);
+
     const addItemToCart = (item) => {
+        Toast.show({
+            type: 'success',
+            text1: 'Message',
+            text2: 'Item successfully added to your cart 🛒',
+        });
+
         setAddedToCart(true);
         dispatch(addToCart(item));
         setTimeout(() => {

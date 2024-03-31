@@ -13,6 +13,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { decrementQuantity, incementQuantity, removeFromCart } from "../../redux/CartReducer";
 import { useNavigation } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
 
 const CartScreen = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,11 @@ const CartScreen = () => {
   };
 
   const deleteItem = (item) => {
+    Toast.show({
+      type: 'success',
+      text1: 'Message',
+      text2: 'Item successfully removed from your cart 🛒',
+    });
     dispatch(removeFromCart(item));
   };
 

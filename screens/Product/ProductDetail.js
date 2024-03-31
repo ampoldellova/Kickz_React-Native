@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/CartReducer';
+import Toast from 'react-native-toast-message';
 
 const ProductDetail = () => {
     const route = useRoute();
@@ -12,6 +13,11 @@ const ProductDetail = () => {
     const dispatch = useDispatch();
     const [addedToCart, setAddedToCart] = useState(false);
     const addItemToCart = (item) => {
+        Toast.show({
+            type: 'success',
+            text1: 'Message',
+            text2: 'Item successfully added to your cart 🛒',
+        });
         setAddedToCart(true);
         dispatch(addToCart(item));
         setTimeout(() => {
