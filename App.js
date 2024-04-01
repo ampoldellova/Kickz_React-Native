@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
-import { PaperProvider } from 'react-native-paper';
+import { PaperProvider } from "react-native-paper";
 import { NativeBaseProvider } from "native-base";
 import { ModalPortal } from "react-native-modals";
 import DrawerNavigation from "./navigation/DrawerNavigation";
@@ -9,6 +9,7 @@ import { UserContext } from "./UserContext";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import Toast from "react-native-toast-message";
+import Main from "./Main";
 
 export default function App() {
   return (
@@ -17,9 +18,8 @@ export default function App() {
         <NativeBaseProvider>
           <PaperProvider>
             <UserContext>
-              <StackNavigator />
+              <Main />
               <Toast />
-              {/* <DrawerNavigation /> */}
               <ModalPortal />
             </UserContext>
           </PaperProvider>
@@ -29,11 +29,11 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });

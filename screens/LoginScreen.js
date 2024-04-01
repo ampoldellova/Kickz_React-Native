@@ -6,11 +6,15 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import baseurl from '../assets/common/baseurl';
+import { useDispatch, useSelector } from 'react-redux'
+import { addUser } from '../redux/UserReducer';
 
 const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const checkLoginStatus = async () => {
@@ -36,6 +40,7 @@ const LoginScreen = () => {
         axios.post(`${baseurl}login`, user).then((response) => {
             // console.log(response);
             const token = response.data.token;
+            dispatch(addUser(response.data.user))
             AsyncStorage.setItem("authToken", token);
             navigation.replace("Main");
         }).catch((error) => {

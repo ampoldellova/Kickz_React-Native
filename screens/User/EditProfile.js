@@ -15,12 +15,12 @@ import { setFormData } from "../../utils/formData";
 import * as ImagePicker from "expo-image-picker";
 import mime from "mime";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const EditProfile = () => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  //   const [bio, setBio] = useState(profile.bio);
   const [image, setImage] = useState("");
   const [token, setToken] = useState("");
 
@@ -35,6 +35,18 @@ const EditProfile = () => {
     };
     console.log(formattedImage);
     return formattedImage;
+  };
+
+  const checkLoginStatus = async () => {
+    try {
+      const toke = await AsyncStorage.getItem("authToken");
+
+      if (!toke) {
+        navigation.replace("Login");
+      }
+    } catch (err) {
+      console.log("error message", err);
+    }
   };
 
   const getUserInfo = async () => {
@@ -60,6 +72,7 @@ const EditProfile = () => {
 
   useFocusEffect(
     useCallback(() => {
+      checkLoginStatus()
       getUserInfo();
     }, [])
   );
@@ -102,7 +115,7 @@ const EditProfile = () => {
     axios
       .put(`${baseurl}update/user/profile`, formData, config)
       .then((res) => {
-        navigation.goBack();
+        navigation.replace("Main");
       })
       .catch((error) => console.log(error.response));
   };
@@ -182,7 +195,7 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     fontSize: 18,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   avatarContainer: {
     marginTop: 20,

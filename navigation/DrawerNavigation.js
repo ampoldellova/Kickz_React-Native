@@ -16,7 +16,7 @@ import AddAddress from '../screens/AddAddress';
 import AddressScreen from '../screens/AddressScreen';
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Main from './Main';
+import AdminNavigator from './AdminNavigator';
 
 const Drawer = createDrawerNavigator();
 
@@ -24,9 +24,12 @@ export default function DrawerNavigation() {
     return (
         <NavigationContainer>
             <Drawer.Navigator initialRouteName="Home">
-                <Drawer.Screen name="Home" component={Main} initialParams={{ screen: 'Home' }} />
-                <Drawer.Screen name="Profile" component={Main} initialParams={{ screen: 'Profile' }} />
-                <Drawer.Screen name="Cart" component={Main} initialParams={{ screen: 'Cart' }} />
+                <Drawer.Screen name="Home" component={AdminNavigator} initialParams={{ screen: 'Home' }} />
+                <Drawer.Screen name="Profile" component={AdminNavigator} initialParams={{ screen: 'Profile' }} />
+                <Drawer.Screen name="Brands" component={AdminNavigator} initialParams={{ screen: 'Brands' }} />
+                <Drawer.Screen name="Products" component={AdminNavigator} initialParams={{ screen: 'Products' }} />
+                <Drawer.Screen name="User" component={AdminNavigator} initialParams={{ screen: 'User' }} />
+                {/* <Drawer.Screen name="Cart" component={Main} initialParams={{ screen: 'Cart' }} /> */}
             </Drawer.Navigator>
         </NavigationContainer>
     );

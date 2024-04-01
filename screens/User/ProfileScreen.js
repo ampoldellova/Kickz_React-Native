@@ -13,8 +13,11 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
 import axios from "axios";
 import baseurl from "../../assets/common/baseurl";
+import { useDispatch } from "react-redux";
+import { cleanUser } from "../../redux/UserReducer";
 
 const ProfileScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
 
@@ -47,8 +50,11 @@ const ProfileScreen = () => {
 
   const handleLogout = async () => {
     AsyncStorage.removeItem("authToken");
+    dispatch(cleanUser());
     Alert.alert("Logout", "You have been logged out");
-    navigation.navigate("Login");
+    setTimeout(() => {
+      navigation.navigate("Login");
+    }, 1000);
   };
 
   const gotoBrands = () => {
@@ -240,5 +246,4 @@ const styles = StyleSheet.create({
     gap: 20,
     marginTop: 20,
   },
-
 });
