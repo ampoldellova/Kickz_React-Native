@@ -29,6 +29,7 @@ export default function DrawerNavigation() {
                 <Drawer.Screen name="Brands" component={AdminNavigator} initialParams={{ screen: 'Brands' }} options={{ headerShown: false, }} />
                 <Drawer.Screen name="Products" component={AdminNavigator} initialParams={{ screen: 'Products' }} options={{ headerShown: false, }} />
                 <Drawer.Screen name="User" component={AdminNavigator} initialParams={{ screen: 'User' }} options={{ headerShown: false, }} />
+                <Drawer.Screen name="Order" component={AdminNavigator} initialParams={{ screen: 'Order' }} options={{ headerShown: false, }} />
                 {/* <Drawer.Screen name="Cart" component={Main} initialParams={{ screen: 'Cart' }} /> */}
             </Drawer.Navigator>
         </NavigationContainer>

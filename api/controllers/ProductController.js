@@ -1,14 +1,15 @@
 const Product = require("../models/product");
 const Brand = require("../models/brand");
+const Review = require("../models/review");
 const ImageFile = require("../utils/ImageFile");
 
 exports.getProducts = async (req, res) => {
   try {
     const product = await Product.find().populate({
-      path: 'brand',
-      model: Brand
-  });
-  
+      path: "brand",
+      model: Brand,
+    });
+
     res.status(200).json({
       product: product,
     });
@@ -71,4 +72,15 @@ exports.deleteProduct = async (req, res) => {
   res.status(200).json({
     message: "Producted Delete",
   });
+};
+
+exports.AddReview = async (req, res) => {
+  try {
+    console.log(req.body)
+    req.body.user = req.user._id;
+    const review = await Review.create(req.body);
+    res.status(200).json({ review });
+  } catch (err) {
+    console.log(err);
+  }
 };

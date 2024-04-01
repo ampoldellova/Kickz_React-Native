@@ -16,8 +16,8 @@ import EditProfile from "../screens/User/EditProfile";
 import ProductDetail from "../screens/Product/ProductDetail";
 import AddAddress from "../screens/AddAddress";
 import AddressScreen from "../screens/AddressScreen";
-import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
+import OrderScreen from "../screens/Admin/Orders/OrderScreen";
 
 export default function AdminNavigator() {
   const Stack = createNativeStackNavigator();
@@ -122,6 +122,11 @@ export default function AdminNavigator() {
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name="Order"
+        component={OrderScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
