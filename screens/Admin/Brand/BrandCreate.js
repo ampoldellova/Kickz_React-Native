@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -70,56 +71,90 @@ const BrandCreate = () => {
   };
 
   return (
-    <View>
-      <Text>Brand Create</Text>
+    <ScrollView style={{ marginTop: 40 }}>
+      <View style={{ padding: 10 }}>
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+            Brand Name
+          </Text>
 
-      <Text style={{ marginLeft: 10 }}>Name</Text>
+          <TextInput
+            value={name}
+            onChangeText={(text) => setName(text)}
+            placeholderTextColor={"gray"}
+            style={{
+              padding: 10,
+              borderColor: "#D0D0D0",
+              borderWidth: 1,
+              marginTop: 10,
+              borderRadius: 5,
+            }}
+            placeholder="Enter brand name"
+          />
+        </View>
+        {/* <Text style={{ marginLeft: 10 }}>Name</Text>
       <TextInput
         value={name}
         style={styles.input}
         onChangeText={(text) => setName(text)}
         placeholder="Brand Name"
-      />
+      /> */}
 
-      <Text style={{ marginLeft: 10 }}>Description</Text>
-      <TextInput
-        value={description}
-        style={styles.input}
-        onChangeText={(text) => setDescription(text)}
-        placeholder="Brand Description"
-      />
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+            Brand Description
+          </Text>
 
-      <Button
-        colorScheme="secondary"
-        onPress={pickImage}
-        style={{ marginLeft: 10 }}
-      >
-        <Text style={{ color: "white", fontWeight: "bold" }}>Pick Image</Text>
-      </Button>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 10 }}>
-        {images.map((image, index) => (
-          <View key={index} style={{ flexDirection: "row", margin: 7 }}>
-            <Image
-              source={{ uri: image }}
-              style={{ width: 100, height: 100, margin: 5 }}
-            />
-            <TouchableOpacity onPress={() => removeImage(index)}>
-              <FontAwesome
-                name="remove"
-                size={24}
-                color="red"
-                style={{ marginLeft: 6 }}
-              />
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <Button onPress={addBrand}>
-          <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
+          <TextInput
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+            placeholderTextColor={"gray"}
+            style={{
+              padding: 10,
+              borderColor: "#D0D0D0",
+              borderWidth: 1,
+              marginTop: 10,
+              borderRadius: 5,
+            }}
+            placeholder="Enter brand description"
+          />
+        </View>
+
+        <Button
+          colorScheme="secondary"
+          onPress={pickImage}
+        >
+          <Text style={{ color: "white", fontWeight: "bold" }}>Pick Image</Text>
         </Button>
+
+        <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 10 }}>
+          {images.map((image, index) => (
+            <View key={index} style={{ flexDirection: "row", margin: 7 }}>
+              <Image
+                source={{ uri: image }}
+                style={{ width: 100, height: 100, margin: 5 }}
+              />
+              <TouchableOpacity onPress={() => removeImage(index)}>
+                <FontAwesome
+                  name="remove"
+                  size={24}
+                  color="red"
+                  style={{ marginLeft: 6 }}
+                />
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+
+        {images.length > 0 && (
+          <View style={{ alignItems: "center" }}>
+            <Button onPress={addBrand} style={{ width: "100%" }}>
+              <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
+            </Button>
+          </View>
+        )}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

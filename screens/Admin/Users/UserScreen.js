@@ -1,4 +1,4 @@
-import { View, image, Dimensions, Alert } from "react-native";
+import { View, image, Dimensions, Alert, Pressable } from "react-native";
 import React, { useCallback, useState } from "react";
 import {
   AddIcon,
@@ -73,25 +73,17 @@ const UserScreen = () => {
   };
 
   return (
-    <View>
-      <Text>User Screen</Text>
-      <Box style={{ with: width / 2.5 }}>
-        <Button
-          variant={"outline"}
-          size={"xs"}
-          borderColor={"#67729D"}
-          onPress={() => navigation.navigate("Register")}
-        >
-          <AddIcon />
-          <Text color={"gray.500"}>Add New</Text>
-        </Button>
-      </Box>
+    <ScrollView style={{ marginTop: 40 }}>
+      <Pressable onPress={() => navigation.navigate("Register")} style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 10, backgroundColor: "#0F0F0F", borderRadius: 10, marginHorizontal: 10, padding: 10 }}>
+        <AddIcon style={{ color: "white" }} />
+        <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>Add User</Text>
+      </Pressable>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <DataTable style={{}}>
           <DataTable.Header>
             <DataTable.Title style={{ width: 100 }}>Image</DataTable.Title>
-            <DataTable.Title style={{ width: 100 }}>Name</DataTable.Title>
-            <DataTable.Title style={{ width: 80 }}>Email</DataTable.Title>
+            <DataTable.Title style={{ width: 200 }}>Name</DataTable.Title>
+            <DataTable.Title style={{ width: 200 }}>Email</DataTable.Title>
           </DataTable.Header>
 
           <View style={{ maxHeight: "100%" }}>
@@ -103,7 +95,7 @@ const UserScreen = () => {
           </View>
         </DataTable>
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 };
 

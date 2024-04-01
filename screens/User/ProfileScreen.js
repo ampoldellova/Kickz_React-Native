@@ -57,15 +57,15 @@ const ProfileScreen = () => {
     }, 1000);
   };
 
-  const gotoBrands = () => {
-    // Navigate to the desired screen
-    navigation.navigate("Brands");
-  };
+  // const gotoBrands = () => {
+  //   // Navigate to the desired screen
+  //   navigation.navigate("Brands");
+  // };
 
-  const gotoProducts = () => {
-    // Navigate to the desired screen
-    navigation.navigate("Products");
-  };
+  // const gotoProducts = () => {
+  //   // Navigate to the desired screen
+  //   navigation.navigate("Products");
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -136,7 +136,7 @@ const ProfileScreen = () => {
         </Pressable>
       </View>
 
-      {user && user.role === "admin" ? (
+      {/* {user && user.role === "admin" ? (
         <>
           <View style={styles.buttonContainer}>
             <Pressable
@@ -206,7 +206,7 @@ const ProfileScreen = () => {
         </>
       ) : (
         <></>
-      )}
+      )} */}
     </SafeAreaView>
   );
 };

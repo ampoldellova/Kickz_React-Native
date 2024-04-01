@@ -1,4 +1,4 @@
-import { View, image, Dimensions, Alert } from "react-native";
+import { View, image, Dimensions, Alert, Pressable } from "react-native";
 import React, { useCallback, useState } from "react";
 import {
   AddIcon,
@@ -50,19 +50,11 @@ const ProductScreen = () => {
   };
 
   return (
-    <View>
-      <Text>BrandScreen</Text>
-      <Box style={{ with: width / 2.5 }}>
-        <Button
-          variant={"outline"}
-          size={"xs"}
-          borderColor={"#67729D"}
-          onPress={() => navigation.navigate("ProductCreate")}
-        >
-          <AddIcon />
-          <Text color={"gray.500"}>Add New</Text>
-        </Button>
-      </Box>
+    <ScrollView style={{ marginTop: 40 }}>
+      <Pressable onPress={() => navigation.navigate("ProductCreate")} style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 10, backgroundColor: "#0F0F0F", borderRadius: 10, marginHorizontal: 10, padding: 10 }}>
+        <AddIcon style={{ color: "white" }} />
+        <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>Add Product</Text>
+      </Pressable>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <DataTable style={{}}>
           <DataTable.Header>
@@ -85,7 +77,7 @@ const ProductScreen = () => {
           </View>
         </DataTable>
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 };
 

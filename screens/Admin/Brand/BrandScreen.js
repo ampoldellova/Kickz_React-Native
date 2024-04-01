@@ -1,4 +1,4 @@
-import { View, image, Dimensions, Alert } from "react-native";
+import { View, image, Dimensions, Alert, Pressable } from "react-native";
 import React, { useCallback, useState } from "react";
 import {
   AddIcon,
@@ -48,20 +48,11 @@ const BrandScreen = () => {
     getAllBrand();
   };
   return (
-    <View>
-      <Box
-        style={{ with: width / 2.5, marginTop: 40 }}
-      >
-        <Button
-          variant={"outline"}
-          size={"xs"}
-          borderColor={"#67729D"}
-          onPress={() => navigation.navigate("BrandCreate")}
-        >
-          <AddIcon />
-          <Text color={"gray.500"}>Add New</Text>
-        </Button>
-      </Box>
+    <ScrollView style={{ marginTop: 40 }}>
+      <Pressable onPress={() => navigation.navigate("BrandCreate")} style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 10, backgroundColor: "#0F0F0F", borderRadius: 10, marginHorizontal: 10, padding: 10 }}>
+        <AddIcon style={{ color: "white" }} />
+        <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>Add Brand</Text>
+      </Pressable>
       <DataTable style={{}}>
         <DataTable.Header>
           <DataTable.Title style={{ width: 100 }}>Image</DataTable.Title>
@@ -77,7 +68,7 @@ const BrandScreen = () => {
           </ScrollView>
         </View>
       </DataTable>
-    </View>
+    </ScrollView>
   );
 };
 

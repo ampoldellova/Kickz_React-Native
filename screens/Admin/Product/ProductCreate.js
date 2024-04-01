@@ -224,11 +224,7 @@ const ProductCreate = () => {
             style={{ fontSize: 15, borderColor: "#D0D0D0", padding: 10 }}
             onValueChange={(e) => setType(e)}
           >
-            <Select.Item
-              key={"High-tops"}
-              label={"High-tops"}
-              value={"High-tops"}
-            />
+            <Select.Item key={"High-tops"} label={"High-tops"} value={"High-tops"} />;
             <Select.Item key={"Mid-cut"} label={"Mid-cut"} value={"Mid-cut"} />;
             <Select.Item key={"Low-tops"} label={"Low-tops"} value={"Low-tops"} />;
             <Select.Item key={"Slip-ons"} label={"Slip-ons"} value={"Slip-ons"} />;

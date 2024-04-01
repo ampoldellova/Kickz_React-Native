@@ -20,9 +20,9 @@ export default function ListItems({ item, deleteUser }) {
     }, [])
   );
 
-    const handleEdit = (id) => {
-      navigation.navigate("UserUpdate", id);
-    };
+  const handleEdit = (id) => {
+    navigation.navigate("UserUpdate", id);
+  };
 
   return (
     <>
@@ -51,7 +51,7 @@ export default function ListItems({ item, deleteUser }) {
               />
             </Box>
           </DataTable.Cell>
-          <DataTable.Cell>{item.name}</DataTable.Cell>
+          <DataTable.Cell style={{ textAlign: "center" }}>{item.name}</DataTable.Cell>
           <DataTable.Cell>{item.email}</DataTable.Cell>
         </View>
         {showAction && (
