@@ -62,13 +62,12 @@ const SingleOrder = ({ route }) => {
     axios
       .post(
         `${baseurl}create/review/${selectedProduct.id?._id}`,
-        { comment: comment,
-        ratings: rating },
+        { comment: comment, ratings: rating },
         config
       )
       .then((res) => {
         setComment("");
-        setRating(1)
+        setRating(1);
         setModalVisible(false);
       })
       .catch((error) => console.log(error));
@@ -201,7 +200,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    marginTop: 40
+    marginTop: 40,
   },
   header: {
     fontSize: 22,

@@ -1,7 +1,15 @@
 const Product = require("../models/product");
 const Brand = require("../models/brand");
+const Order = require("../models/order");
 const Review = require("../models/review");
 const ImageFile = require("../utils/ImageFile");
+
+async function calculateAverageRating(reviews) {
+  const totalRatings = reviews.length;
+  const sumRatings = reviews.reduce((acc, review) => acc + review.ratings, 0);
+  const averageRating = totalRatings > 0 ? sumRatings / totalRatings : 0;
+  return averageRating;
+}
 
 exports.getProducts = async (req, res) => {
   try {
@@ -10,6 +18,27 @@ exports.getProducts = async (req, res) => {
     res.status(200).json({
       product: product,
     });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.reviewsOfProduct = async (req, res, next) => {
+  try {
+    console.log(req.params.id);
+    const reviews = await Review.find({
+      product: req.params.id,
+    });
+
+    const rating = await calculateAverageRating(reviews);
+
+    return res.status(200).json({
+      success: true,
+      reviews: reviews,
+      rating: rating,
+      totalReviews: reviews.length,
+    });
+    console.log(reviews);
   } catch (err) {
     console.log(err);
   }
@@ -72,22 +101,37 @@ exports.deleteProduct = async (req, res) => {
 };
 
 exports.AddReview = async (req, res) => {
-  // console.log(req.params.id)
   try {
     req.body.user = req.user._id;
+    req.body.product = req.params.id;
     const review = await Review.create(req.body);
+    const product = await Product.findById(req.params.id);
 
-    const product = await Product.findByIdAndUpdate(
+    await Product.findByIdAndUpdate(
       req.params.id,
       {
         $push: { reviews: review._id },
-        ratings: req.body.ratings,
       },
       { new: true }
     );
-    console.log(product)
+
     res.status(200).json({ review });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ error: "Server error" });
   }
+};
+
+exports.EditReview = async (req, res) => {
+  try {
+    await Review.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.status(200).json({ message: "Updated" });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.deleteReview = async (req, res) => {
+  await Review.findByIdAndDelete(req.params.id);
+  res.status(200).json({ message: "Review Deleted" });
 };
