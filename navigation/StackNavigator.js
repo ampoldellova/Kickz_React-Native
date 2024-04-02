@@ -31,12 +31,15 @@ import OrderSuccess from "../screens/Order/OrderSuccess";
 import { useSelector } from "react-redux";
 import Order from "../screens/Order";
 import SingleOrder from "../screens/SingleOrder";
+import { Badge } from "native-base";
+// import { Badge } from "react-native-paper";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
   const user = useSelector((state) => state.user.user);
+  const cart = useSelector((state) => state.cart.cart);
 
   function BottomTabs() {
     return (
@@ -82,9 +85,23 @@ const StackNavigator = () => {
             headerShown: false,
             tabBarIcon: ({ focused }) =>
               focused ? (
-                <Ionicons name="cart-sharp" size={24} color="#0F0F0F" />
+                <View style={{ flexDirection: "row" }}>
+                  <Ionicons name="cart-sharp" size={24} color="#0F0F0F" />
+                  {/* {cart.length === 0 ? (
+                    <></>
+                  ) : (
+                    <Text style={{ fontSize: 10 }}>{cart.length}</Text>
+                  )} */}
+                </View>
               ) : (
-                <Ionicons name="cart-outline" size={24} color="black" />
+                <View style={{ flexDirection: "row" }}>
+                  <Ionicons name="cart-outline" size={24} color="black" />
+                  {/* {cart.length === 0 ? (
+                    <></>
+                  ) : (
+                    <Text style={{ fontSize: 10 }}>{cart.length}</Text>
+                  )} */}
+                </View>
               ),
           }}
         />

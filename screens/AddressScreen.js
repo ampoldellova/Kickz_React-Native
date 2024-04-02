@@ -60,7 +60,7 @@ const AddressScreen = () => {
             setCountry("");
 
             setTimeout(() => {
-                navigation.navigate("AddAddress");
+                navigation.navigate("Home");
             }, 500)
         }).catch((error) => {
             Alert.alert("Error", "Failed to add address")
@@ -218,7 +218,7 @@ const AddressScreen = () => {
                         selectedValue={country}
                         placeholder="Select your country"
                         placeholderTextColor={"gray"}
-                        style={{ fontSize: 15, borderColor: "#D0D0D0", padding: 10}}
+                        style={{ fontSize: 15, borderColor: "#D0D0D0", padding: 10 }}
                         onValueChange={(e) => setCountry(e)}
                     >
                         {countries.map((country) => {

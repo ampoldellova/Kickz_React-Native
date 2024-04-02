@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
+  Image,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
@@ -31,7 +32,6 @@ const Order = () => {
 
       const { data } = await axios.get(`${baseurl}get/single/order`, config);
       setOrder(data.order);
-      console.log(data.order);
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +66,11 @@ const Order = () => {
         <Text style={{ fontSize: 14, fontStyle: "italic", marginTop: 5 }}>Status:</Text>
         <Text
           style={{
-            color: item.orderStatus === "Cancelled" ? "#FF5733" : "#87A922", // Change background color based on orderStatus
+            color: item.orderStatus === "Processing" ? "#FDA403" :
+              item.orderStatus === "Cancelled" ? "#FF5733" :
+                item.orderStatus === "Order Delivered" ? "#40A2E3" :
+                  item.orderStatus === "Order Received" ? "#87A922" :
+                    "#000",
             fontSize: 14,
             fontWeight: "bold",
             borderRadius: 30,
@@ -75,6 +79,7 @@ const Order = () => {
         >
           {item.orderStatus}
         </Text>
+
 
       </View>
     </TouchableOpacity>

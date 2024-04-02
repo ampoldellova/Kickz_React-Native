@@ -6,6 +6,7 @@ import {
   ScrollView,
   Button,
   Alert,
+  ImageBackground,
 } from "react-native";
 import React from "react";
 import axios from "axios";
@@ -34,92 +35,109 @@ const AdminSingleOrder = ({ route }) => {
     });
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      undefined,
+      options
+    );
+    return formattedDate;
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.header}>Order Details</Text>
-      <Text style={styles.subHeader}>Products</Text>
-      {products.map((product, index) => (
-        <View key={index} style={styles.productContainer}>
-          <Image source={{ uri: product.image }} style={styles.productImage} />
-          <View style={styles.productDetails}>
-            <Text style={styles.productName}>{product.name}</Text>
-            <Text>Price: ${product.price}</Text>
-            <Text>Quantity: {product.quantity}</Text>
+    <ImageBackground
+      source={require("../../../assets/homeBackground.png")}
+      style={styles.background}>
+      <ScrollView style={styles.container}>
+        <Text style={styles.header}>Order Details</Text>
+        <View style={{ backgroundColor: "white", borderRadius: 10, padding: 10 }}>
+          <Text style={styles.subHeader}>List of items</Text>
+          {products.map((product, index) => (
+            <View key={index} style={styles.productContainer}>
+              <Image source={{ uri: product.image }} style={styles.productImage} />
+              <View style={{ textAlignVertical: "center" }}>
+                <Text style={{ marginTop: 20, fontWeight: "bold" }}>{product.name}</Text>
+                <Text style={{ fontStyle: "italic" }}>Price: ${product.price}</Text>
+                <Text style={{ fontStyle: "italic" }}>Quantity: {product.quantity}</Text>
+              </View>
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.section}>
+          <Text style={{ fontSize: 16, fontWeight: "bold" }}>Shipping Address</Text>
+          <Text>Name: {shippingAddress.name}</Text>
+          <Text>
+            House no: {shippingAddress.houseNo}, {shippingAddress.street}
+          </Text>
+          <Text>Landmark: {shippingAddress.landmark}</Text>
+          <Text>Postal Code: {shippingAddress.postalCode}</Text>
+          <Text>Mobile: {shippingAddress.mobileNo}</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={{ fontSize: 16, fontWeight: "bold" }}>Order Information</Text>
+          <Text>Order ID: {_id}</Text>
+          <Text>Date: {formatDate(createdAt)}</Text>
+          <Text>Status: {orderStatus}</Text>
+          <Text>Payment Method: {paymentMethod}</Text>
+          <Text style={{ fontWeight: "bold" }}>Total Price: ₱ {totalPrice}</Text>
+        </View>
+        {orderStatus === "Processing" ? (
+          <View style={styles.updateButton}>
+            <Button
+              title="Update Status to Confirmed"
+              onPress={() => {
+                updateOrderStatus("Confirmed");
+                setTimeout(() => {
+                  navigation.navigate("Order");
+                  Alert.alert("Order Status Updated");
+                }, 1000);
+              }}
+            />
           </View>
-        </View>
-      ))}
-      <View style={styles.section}>
-        <Text style={styles.subHeader}>Shipping Address</Text>
-        <Text>{shippingAddress.name}</Text>
-        <Text>
-          {shippingAddress.houseNo}, {shippingAddress.street}
-        </Text>
-        <Text>{shippingAddress.landmark}</Text>
-        <Text>{shippingAddress.postalCode}</Text>
-        <Text>Mobile: {shippingAddress.mobileNo}</Text>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.subHeader}>Order Information</Text>
-        <Text>Order ID: {_id}</Text>
-        <Text>Date: {new Date(createdAt).toLocaleDateString()}</Text>
-        <Text>Status: {orderStatus}</Text>
-        <Text>Payment Method: {paymentMethod}</Text>
-        <Text>Total Price: ${totalPrice}</Text>
-      </View>
-      {orderStatus === "Processing" ? (
-        <View style={styles.updateButton}>
-          <Button
-            title="Update Status to Confirmed"
-            onPress={() => {
-              updateOrderStatus("Confirmed");
-              setTimeout(() => {
-                navigation.navigate("Order");
-                Alert.alert("Order Status Updated");
-              }, 1000);
-            }}
-          />
-        </View>
-      ) : orderStatus === "Confirmed" ? (
-        <View style={styles.updateButton}>
-          <Button
-            title="To Ship"
-            onPress={() => {
-              updateOrderStatus("To Ship");
-              setTimeout(() => {
-                navigation.navigate("Order");
-                Alert.alert("Order Shipped");
-              }, 1000);
-            }}
-          />
-        </View>
-      ) : orderStatus === "To Ship" ? (
-        <View style={styles.updateButton}>
-          <Button
-            title="Out for Delivery"
-            onPress={() => {
-              updateOrderStatus("Out for Delivery");
-              setTimeout(() => {
-                navigation.navigate("Order");
-                Alert.alert("Order Status Updated");
-              }, 1000);
-            }}
-          />
-        </View>
-      ) : orderStatus === "Out for Delivery" ? (
-        <View style={styles.updateButton}>
-          <Button
-            title="Order Delivered"
-            onPress={() => {
-              updateOrderStatus("Order Delivered");
-              setTimeout(() => {
-                navigation.navigate("Order");
-                Alert.alert("Order Status Updated");
-              }, 1000);
-            }}
-          />
-        </View>
-      ) : <></>}
-    </ScrollView>
+        ) : orderStatus === "Confirmed" ? (
+          <View style={styles.updateButton}>
+            <Button
+              title="To Ship"
+              onPress={() => {
+                updateOrderStatus("To Ship");
+                setTimeout(() => {
+                  navigation.navigate("Order");
+                  Alert.alert("Order Shipped");
+                }, 1000);
+              }}
+            />
+          </View>
+        ) : orderStatus === "To Ship" ? (
+          <View style={styles.updateButton}>
+            <Button
+              title="Out for Delivery"
+              onPress={() => {
+                updateOrderStatus("Out for Delivery");
+                setTimeout(() => {
+                  navigation.navigate("Order");
+                  Alert.alert("Order Status Updated");
+                }, 1000);
+              }}
+            />
+          </View>
+        ) : orderStatus === "Out for Delivery" ? (
+          <View style={styles.updateButton}>
+            <Button
+              title="Order Delivered"
+              onPress={() => {
+                updateOrderStatus("Order Delivered");
+                setTimeout(() => {
+                  navigation.navigate("Order");
+                  Alert.alert("Order Status Updated");
+                }, 1000);
+              }}
+            />
+          </View>
+        ) : <></>}
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -127,21 +145,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    marginTop: 40
+  },
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+    height: "100%",
   },
   header: {
     fontSize: 22,
     fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center"
   },
   subHeader: {
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: 10,
     marginBottom: 5,
   },
   productContainer: {
     flexDirection: "row",
-    marginBottom: 10,
   },
   productImage: {
     width: 100,
@@ -158,6 +182,9 @@ const styles = StyleSheet.create({
   },
   section: {
     marginTop: 10,
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 10
   },
   updateButton: {
     marginTop: 20,
