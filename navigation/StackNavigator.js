@@ -29,6 +29,8 @@ import UserScreen from "../screens/Admin/Users/UserScreen";
 import UserUpdate from "../screens/Admin/Users/UserUpdate";
 import OrderSuccess from "../screens/Order/OrderSuccess";
 import { useSelector } from "react-redux";
+import Order from "../screens/Order";
+import SingleOrder from "../screens/SingleOrder";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -147,6 +149,21 @@ const StackNavigator = () => {
           name="EditProfile"
           component={EditProfile}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Order"
+          component={Order}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SingleOrder"
+          component={SingleOrder}
+          options={({ route }) => ({
+            headerShown:
+              route.params && route.params.showHeader
+                ? route.params.showHeader
+                : false,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

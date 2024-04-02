@@ -94,3 +94,12 @@ exports.UpdateStatus = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.getSingleOrderUser = async (req, res) => {
+  try {
+    const order = await Order.find({ user: req.user._id });
+    res.status(200).json({ order });
+  } catch (err) {
+    console.log(err);
+  }
+};
