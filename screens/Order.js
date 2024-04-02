@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  ImageBackground,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
@@ -58,30 +59,52 @@ const Order = () => {
         navigation.navigate("SingleOrder", item);
       }}
     >
-      <Text style={styles.orderDate}>ORDER ID: {item._id}</Text>
-      <Text style={styles.orderDate}>{formatDate(item.createdAt)}</Text>
-      <Text style={styles.orderTotal}>₱{item.totalPrice}</Text>
-      <Text style={styles.orderStatus}>{`Status: ${item.orderStatus}`}</Text>
+      <Text style={{ fontSize: 18, fontWeight: "bold", marginTop: 5 }}>Order ID: {item._id}</Text>
+      <Text style={{ fontSize: 14, fontStyle: "italic", marginTop: 5 }}>Date Ordered: {formatDate(item.createdAt)}</Text>
+      <Text style={{ fontSize: 14, fontStyle: "italic", marginTop: 5 }}>Order Total: ₱{item.totalPrice}</Text>
+      <View style={{ flexDirection: "row" }}>
+        <Text style={{ fontSize: 14, fontStyle: "italic", marginTop: 5 }}>Status:</Text>
+        <Text
+          style={{
+            backgroundColor: item.orderStatus === "Cancelled" ? "#FF5733" : "#87A922", // Change background color based on orderStatus
+            fontSize: 10,
+            fontWeight: "bold",
+            marginLeft: 5,
+            marginTop: 5,
+            color: "white",
+            borderRadius: 30,
+            padding: 5
+          }}
+        >
+          {item.orderStatus}
+        </Text>
+
+      </View>
     </TouchableOpacity>
   );
 
   return (
-    <FlatList
-      data={order}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.container}
-    />
+    <ImageBackground source={require("../assets/homeBackground.png")} style={styles.background}>
+      <View style={{ padding: 10 }}>
+        <Text style={{ marginTop: 40, fontWeight: "bold", fontSize: 20, textAlign: "center" }}>Your orders</Text>
+        <FlatList
+          data={order}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.container}
+        />
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    borderRadius: 10
   },
   orderItem: {
     backgroundColor: "#fff",
-    padding: 20,
+    padding: 10,
     marginVertical: 8,
     borderRadius: 5,
     shadowColor: "#000",
@@ -90,19 +113,11 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
     elevation: 3,
   },
-  orderDate: {
-    fontSize: 16,
-    marginBottom: 5,
-  },
-  orderTotal: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  orderStatus: {
-    fontSize: 14,
-    color: "grey",
-    marginTop: 5,
-  },
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+    height: "100%"
+  }
 });
 
 export default Order;
