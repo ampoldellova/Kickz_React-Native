@@ -61,17 +61,14 @@ const Order = () => {
     >
       <Text style={{ fontSize: 18, fontWeight: "bold", marginTop: 5 }}>Order ID: {item._id}</Text>
       <Text style={{ fontSize: 14, fontStyle: "italic", marginTop: 5 }}>Date Ordered: {formatDate(item.createdAt)}</Text>
-      <Text style={{ fontSize: 14, fontStyle: "italic", marginTop: 5 }}>Order Total: ₱{item.totalPrice}</Text>
+      <Text style={{ fontSize: 14, fontStyle: "italic", marginTop: 5 }}>Order Total: ₱ {item.totalPrice}</Text>
       <View style={{ flexDirection: "row" }}>
         <Text style={{ fontSize: 14, fontStyle: "italic", marginTop: 5 }}>Status:</Text>
         <Text
           style={{
-            backgroundColor: item.orderStatus === "Cancelled" ? "#FF5733" : "#87A922", // Change background color based on orderStatus
-            fontSize: 10,
+            color: item.orderStatus === "Cancelled" ? "#FF5733" : "#87A922", // Change background color based on orderStatus
+            fontSize: 14,
             fontWeight: "bold",
-            marginLeft: 5,
-            marginTop: 5,
-            color: "white",
             borderRadius: 30,
             padding: 5
           }}
@@ -100,7 +97,7 @@ const Order = () => {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 10
+    borderRadius: 10,
   },
   orderItem: {
     backgroundColor: "#fff",
