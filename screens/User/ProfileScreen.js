@@ -135,32 +135,35 @@ const ProfileScreen = () => {
           </Text>
         </Pressable>
       </View>
-
-      <View style={styles.buttonContainer}>
-        <Pressable
-          onPress={() => {
-            navigation.navigate("Order");
-            console.log("90");
-          }}
-          style={{
-            width: 150,
-            backgroundColor: "#99D5F3",
-            borderRadius: 10,
-            padding: 15,
-          }}
-        >
-          <Text
+      {user?.role !== "admin" ? (
+        <View style={styles.buttonContainer}>
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Order");
+              console.log("90");
+            }}
             style={{
-              textAlign: "center",
-              color: "#0F0F0F",
-              fontSize: 16,
-              fontWeight: "bold",
+              width: 150,
+              backgroundColor: "#99D5F3",
+              borderRadius: 10,
+              padding: 15,
             }}
           >
-            Your Orders
-          </Text>
-        </Pressable>
-      </View>
+            <Text
+              style={{
+                textAlign: "center",
+                color: "#0F0F0F",
+                fontSize: 16,
+                fontWeight: "bold",
+              }}
+            >
+              Your Orders
+            </Text>
+          </Pressable>
+        </View>
+      ) : (
+        <></>
+      )}
 
       {/* {user && user.role === "admin" ? (
         <>

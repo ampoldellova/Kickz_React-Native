@@ -66,12 +66,12 @@ const SingleOrder = ({ route }) => {
         <Text>Payment Method: {paymentMethod}</Text>
         <Text>Total Price: ${totalPrice}</Text>
       </View>
-      {orderStatus === "on delivery" ? (
+      {orderStatus === "Order Delivered" ? (
         <View style={styles.updateButton}>
           <Button
             title="Update Status to Received"
             onPress={() => {
-              updateOrderStatus("Received");
+              updateOrderStatus("Order Received");
               setTimeout(() => {
                 navigation.navigate("Order");
                 Alert.alert("Status Updated", "Kindly Check your Order");
