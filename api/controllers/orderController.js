@@ -103,3 +103,43 @@ exports.getSingleOrderUser = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.calculateAverageSalesPerProduct = async (req, res) => {
+  try {
+    const averageSalesPerProduct = await Order.aggregate([
+      { $unwind: "$products" },
+      { $group: { _id: "$products.id", averageSales: { $avg: "$products.quantity" } } },
+      { $lookup: { from: "products", localField: "_id", foreignField: "_id", as: "productDetails" } },
+      { $project: { _id: 0, productId: "$_id", label: { $arrayElemAt: ["$productDetails.name", 0] }, value: "$averageSales" } }
+    ]);
+    res.status(200).json({ averageSalesPerProduct })
+  } catch (error) {
+    console.error("Error calculating average sales per product:", error);
+  }
+};
+
+exports.calculateTotalSalesPerProduct = async (req, res) => {
+  try {
+    const totalSalesPerProduct = await Order.aggregate([
+      { $unwind: "$products" },
+      { $group: { _id: "$products.id", totalSales: { $sum: "$products.quantity" } } },
+      { $lookup: { from: "products", localField: "_id", foreignField: "_id", as: "productDetails" } },
+      { $project: { _id: 0, productId: "$_id", label: "$productDetails.name", value: 1 } }
+    ]);
+    res.status(200).json({ totalSalesPerProduct });
+  } catch (error) {
+    console.error("Error calculating total sales per product:", error);
+  }
+};
+
+exports.getProductStockLevels = async (req, res) => {
+  try {
+    const productStockLevels = await Product.aggregate([
+      { $project: { _id: 0, productId: "$_id", productName: "$name", stock: 1 } }
+    ]);
+    return productStockLevels;
+  } catch (error) {
+    console.error("Error retrieving product stock levels:", error);
+  }
+};
+

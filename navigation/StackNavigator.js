@@ -32,6 +32,7 @@ import { useSelector } from "react-redux";
 import Order from "../screens/Order";
 import SingleOrder from "../screens/SingleOrder";
 import { Badge } from "native-base";
+import ChartScreen from "../screens/Admin/ChartScreen";
 // import { Badge } from "react-native-paper";
 
 const StackNavigator = () => {

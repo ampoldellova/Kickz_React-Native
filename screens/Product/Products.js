@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/CartReducer';
 import Toast from 'react-native-toast-message';
 
+
 const Products = ({ item }) => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -26,7 +27,6 @@ const Products = ({ item }) => {
     };
 
     const cart = useSelector((state) => state.cart.cart);
-    console.log("CartItems", cart);
 
     return (
         <Pressable style={{ marginHorizontal: 5, marginVertical: 5, borderWidth: 1, borderRadius: 10, padding: 10, borderColor: "black", backgroundColor: "white" }}>

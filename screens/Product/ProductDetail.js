@@ -30,8 +30,11 @@ import { BottomModal, ModalContent, SlideAnimation } from "react-native-modals";
 import baseurl from "../../assets/common/baseurl";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Feather } from '@expo/vector-icons';
+import filipinoBarwords from 'filipino-badwords-list';
+import Filter from 'bad-words';
 
 const ProductDetail = () => {
+    const filter = new Filter({ list: filipinoBarwords.array });
     const route = useRoute();
     const navigation = useNavigation();
     const { width } = Dimensions.get("window");
@@ -99,7 +102,7 @@ const ProductDetail = () => {
                 setComment("");
                 setRatings(1);
                 setModalVisible(false);
-                Alert.alert("Updated Review");
+                Alert.alert("Updated Review","Your review is successfully updated!");
                 navigation.navigate("Home");
             })
             .catch((error) => console.log(error));
@@ -109,7 +112,7 @@ const ProductDetail = () => {
         axios
             .delete(`${baseurl}delete/review/${id}`)
             .then((res) => {
-                Alert.alert("Deleted Review");
+                Alert.alert("Deleted Review", "Your review is successfully deleted!");
                 navigation.navigate("Home");
             })
             .catch((error) => console.log(error));
@@ -343,7 +346,7 @@ const ProductDetail = () => {
                                         <Text
                                             style={{ textAlign: "justify", width: 280, fontSize: 12 }}
                                         >
-                                            {review?.comment}
+                                            {filter.clean(review?.comment)}
                                         </Text>
                                     </View>
                                 </View>
