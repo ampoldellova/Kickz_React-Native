@@ -491,23 +491,11 @@ const ConfirmationScreen = () => {
                             marginTop: 12,
                         }}
                     >
-                        {selectedOption === "Card" ? (
+                        {selectedOption === "Credit Card" ? (
                             <FontAwesome5 name="dot-circle" size={20} color="#0F0F0F" />
                         ) : (
                             <Entypo
-                                onPress={() => {
-                                    setSelectedOption("Card");
-                                    Alert.alert("Credit/Debit card", "Do you want to pay Online?", [
-                                        {
-                                            text: "Cancel",
-                                            onPress: () => console.log("Cancel is pressed"),
-                                        },
-                                        {
-                                            text: "Yes",
-                                            onPress: () => pay(),
-                                        },
-                                    ]);
-                                }}
+                                onPress={() => setSelectedOption("Credit Card")}
                                 name="circle"
                                 size={20}
                                 color="gray"
@@ -517,7 +505,7 @@ const ConfirmationScreen = () => {
                         <Text>Credit or debit card</Text>
                     </View>
 
-                    {selectedOption === "Cash on Delivery" || selectedOption === "Card" ? (
+                    {selectedOption === "Cash on Delivery" || selectedOption === "Credit Card" ? (
                         <Pressable
                             onPress={() => setCurrentStep(3)}
                             style={{
@@ -535,7 +523,7 @@ const ConfirmationScreen = () => {
                 </View>
             )}
 
-            {currentStep === 3 && selectedOption === "Cash on Delivery" && (
+            {currentStep === 3 && (
                 <View style={{ marginHorizontal: 20 }}>
                     <Text style={{ fontSize: 16, fontWeight: "bold", marginTop: 10 }}>Place Order Now</Text>
                     <View
