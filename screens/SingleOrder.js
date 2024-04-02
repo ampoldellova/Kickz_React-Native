@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,14 +7,22 @@ import {
   ScrollView,
   Button,
   Alert,
+  TextInput,
+  TouchableHighlight,
 } from "react-native";
-import React from "react";
 import baseurl from "../assets/common/baseurl";
 import axios from "axios";
+import { BottomModal, ModalContent, SlideAnimation } from "react-native-modals";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Rating } from "react-native-ratings";
 
 const SingleOrder = ({ route }) => {
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [rating, setRating] = useState(1);
+  const [comment, setComment] = useState("");
 
   console.log(route.params);
   const {
@@ -34,20 +43,61 @@ const SingleOrder = ({ route }) => {
     });
   };
 
+  const handleProductPress = (product) => {
+    setSelectedProduct(product);
+    setModalVisible(true);
+  };
+
+  const addComment = async () => {
+    // console.log(selectedProduct.id?._id)
+    const token = await AsyncStorage.getItem("authToken");
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+    };
+
+    axios
+      .post(
+        `${baseurl}create/review/${selectedProduct.id?._id}`,
+        { comment: comment,
+        ratings: rating },
+        config
+      )
+      .then((res) => {
+        setComment("");
+        setRating(1)
+        setModalVisible(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Order Details</Text>
       <Text style={styles.subHeader}>Products</Text>
       {products.map((product, index) => (
-        <View key={index} style={styles.productContainer}>
-          <Image source={{ uri: product.image }} style={styles.productImage} />
-          <View style={styles.productDetails}>
-            <Text style={styles.productName}>{product.name}</Text>
-            <Text>Price: ${product.price}</Text>
-            <Text>Quantity: {product.quantity}</Text>
+        <TouchableHighlight
+          key={index}
+          onPress={() => handleProductPress(product)}
+          underlayColor="transparent"
+        >
+          <View style={styles.productContainer}>
+            <Image
+              source={{ uri: product.image }}
+              style={styles.productImage}
+            />
+            <View style={styles.productDetails}>
+              <Text style={styles.productName}>{product.name}</Text>
+              <Text>Price: ${product.price}</Text>
+              <Text>Quantity: {product.quantity}</Text>
+            </View>
           </View>
-        </View>
+        </TouchableHighlight>
       ))}
+
       <View style={styles.section}>
         <Text style={styles.subHeader}>Shipping Address</Text>
         <Text>{shippingAddress.name}</Text>
@@ -94,6 +144,55 @@ const SingleOrder = ({ route }) => {
           />
         </View>
       ) : null}
+
+      {/*Modal for Reviews and Rating */}
+      <BottomModal
+        onBackdropPress={() => setModalVisible(!modalVisible)}
+        swipeDirection={["up", "down"]}
+        swipeThreshold={200}
+        modalAnimation={new SlideAnimation({ slideFrom: "bottom" })}
+        onHardwareBackPress={() => setModalVisible(!modalVisible)}
+        visible={modalVisible}
+        onTouchOutside={() => setModalVisible(!modalVisible)}
+      >
+        <ModalContent style={{ width: "100%", height: 400 }}>
+          <View style={{ marginBottom: 8 }}>
+            <Text style={{ fontSize: 16, fontWeight: "500" }}>
+              {selectedProduct && selectedProduct.name}
+            </Text>
+            <Rating
+              ratingCount={5}
+              imageSize={30}
+              startingValue={rating}
+              minValue={1}
+              showRating
+              onFinishRating={(text) => setRating(text)}
+            />
+            <TextInput
+              placeholderTextColor={"gray"}
+              multiline
+              numberOfLines={5}
+              value={comment}
+              onChangeText={(text) => setComment(text)}
+              placeholder="Reviews"
+              style={{
+                marginTop: 5,
+                fontSize: 16,
+                color: "gray",
+                borderWidth: 1,
+              }}
+            ></TextInput>
+            <Button title="submit" onPress={addComment}>
+              <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
+            </Button>
+          </View>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          ></ScrollView>
+        </ModalContent>
+      </BottomModal>
     </ScrollView>
   );
 };

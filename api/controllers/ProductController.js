@@ -5,10 +5,7 @@ const ImageFile = require("../utils/ImageFile");
 
 exports.getProducts = async (req, res) => {
   try {
-    const product = await Product.find().populate({
-      path: "brand",
-      model: Brand,
-    });
+    const product = await Product.find();
 
     res.status(200).json({
       product: product,
@@ -75,10 +72,20 @@ exports.deleteProduct = async (req, res) => {
 };
 
 exports.AddReview = async (req, res) => {
+  // console.log(req.params.id)
   try {
-    console.log(req.body)
     req.body.user = req.user._id;
     const review = await Review.create(req.body);
+
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: { reviews: review._id },
+        ratings: req.body.ratings,
+      },
+      { new: true }
+    );
+    console.log(product)
     res.status(200).json({ review });
   } catch (err) {
     console.log(err);
