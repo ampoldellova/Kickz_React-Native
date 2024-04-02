@@ -31,14 +31,14 @@ const sendVerificationEmail = async (email, verificationToken) => {
 
   //compose the email message
   const mailOptions = {
-    from: "kickz.com",
+    from: "kickz@gmail.com",
     to: email,
     subject: "Email Verification",
   };
   if (ip.WiFi && ip.WiFi.length > 0) {
-    mailOptions.text = `Please click the following link to verify your email: http://${ip.WiFi[0]}:8000/api/v1/verify/${verificationToken}`;
+    mailOptions.html = `<p>Please click the following link to verify your email: <a href="http://${ip.WiFi[0]}:8000/api/v1/verify/${verificationToken}">Verification Link</a></p>`;
   } else {
-    mailOptions.text = `Please click the following link to verify your email: http://${ip.Ethernet[0]}:8000/api/v1/verify/${verificationToken}`;
+    mailOptions.html = `<p>Please click the following link to verify your email: <a href="http://${ip.Ethernet[0]}:8000/api/v1/verify/${verificationToken}">Verification Link</a></p>`;
   }
 
   //send the email
