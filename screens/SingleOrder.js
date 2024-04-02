@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    marginTop: 40
   },
   header: {
     fontSize: 22,
