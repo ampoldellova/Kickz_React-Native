@@ -71,6 +71,8 @@ const SingleOrder = ({ route }) => {
         setComment("");
         setRating(1);
         setModalVisible(false);
+        Alert.alert("Submitted Review", "Your review is submitted successfully !");
+        navigation.goBack();
       })
       .catch((error) => console.log(error));
   };
@@ -187,7 +189,6 @@ const SingleOrder = ({ route }) => {
               editable
               multiline
               numberOfLines={5}
-              maxLength={40}
               onChangeText={(text) => setComment(text)}
               placeholder="Enter your review for this product"
               value={comment}

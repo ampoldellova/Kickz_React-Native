@@ -102,7 +102,7 @@ const ProductDetail = () => {
                 setComment("");
                 setRatings(1);
                 setModalVisible(false);
-                Alert.alert("Updated Review","Your review is successfully updated!");
+                Alert.alert("Updated Review", "Your review is successfully updated!");
                 navigation.navigate("Home");
             })
             .catch((error) => console.log(error));
@@ -119,7 +119,7 @@ const ProductDetail = () => {
     };
 
     const user = useSelector((state) => state.user.user);
-
+    console.log(SelectedReview)
     return (
         <>
             <ImageBackground
@@ -395,36 +395,30 @@ const ProductDetail = () => {
                 onTouchOutside={() => setModalVisible(!modalVisible)}
             >
                 <ModalContent style={{ width: "100%", height: 400 }}>
-                    <View style={{ marginBottom: 8 }}>
-                        <Text style={{ fontSize: 16, fontWeight: "500" }}>
-                            {SelectedReview && SelectedReview.name}
-                        </Text>
-                        <Rating
-                            ratingCount={5}
-                            imageSize={30}
-                            startingValue={ratings}
-                            minValue={1}
-                            showRating
-                            onFinishRating={(text) => setRatings(text)}
-                        />
-                        <TextInput
-                            placeholderTextColor={"gray"}
-                            multiline
-                            numberOfLines={5}
-                            value={comment}
-                            onChangeText={(text) => setComment(text)}
-                            placeholder="Reviews"
-                            style={{
-                                marginTop: 5,
-                                fontSize: 16,
-                                color: "gray",
-                                borderWidth: 1,
-                            }}
-                        ></TextInput>
-                        <Button title="submit" onPress={editComment}>
-                            <Text style={{ color: "white", fontWeight: "bold" }}>Submit</Text>
-                        </Button>
-                    </View>
+                    <Rating
+                        ratingCount={5}
+                        imageSize={30}
+                        startingValue={ratings}
+                        minValue={1}
+                        showRating
+                        onFinishRating={(text) => setRatings(text)}
+                    />
+                    <Text style={{ fontSize: 16, marginTop: 20 }}>
+                        Product: {SelectedReview && SelectedReview.product.name}
+                    </Text>
+
+                    <TextInput
+                        editable
+                        multiline
+                        numberOfLines={5}
+                        onChangeText={(text) => setComment(text)}
+                        placeholder="Enter your review for this product"
+                        value={comment}
+                        style={{ padding: 10, borderWidth: 1, textAlignVertical: "top", marginTop: 10, borderRadius: 10 }}
+                    />
+                    <Pressable onPress={editComment} style={{ padding: 10, backgroundColor: "#0F0F0F", marginTop: 10, borderRadius: 10 }}>
+                        <Text style={{ color: "white", fontWeight: "bold", textAlign: "center" }}>Submit</Text>
+                    </Pressable>
 
                     <ScrollView
                         horizontal
