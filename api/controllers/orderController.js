@@ -2,6 +2,24 @@ const User = require("../models/user");
 const Order = require("../models/order");
 const nodemailer = require("nodemailer");
 
+const getMonthName = (monthNumber) => {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  return months[monthNumber - 1]; // Adjust index by subtracting 1
+};
+
 const sendOrderNotification = async (email, products, order) => {
   //create a nodemailer transport
 
@@ -108,11 +126,30 @@ exports.calculateAverageSalesPerProduct = async (req, res) => {
   try {
     const averageSalesPerProduct = await Order.aggregate([
       { $unwind: "$products" },
-      { $group: { _id: "$products.id", averageSales: { $avg: "$products.quantity" } } },
-      { $lookup: { from: "products", localField: "_id", foreignField: "_id", as: "productDetails" } },
-      { $project: { _id: 0, productId: "$_id", label: { $arrayElemAt: ["$productDetails.name", 0] }, value: "$averageSales" } }
+      {
+        $group: {
+          _id: "$products.id",
+          averageSales: { $avg: "$products.quantity" },
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "productDetails",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          productId: "$_id",
+          label: { $arrayElemAt: ["$productDetails.name", 0] },
+          value: "$averageSales",
+        },
+      },
     ]);
-    res.status(200).json({ averageSalesPerProduct })
+    res.status(200).json({ success: true, averageSalesPerProduct });
   } catch (error) {
     console.error("Error calculating average sales per product:", error);
   }
@@ -122,9 +159,28 @@ exports.calculateTotalSalesPerProduct = async (req, res) => {
   try {
     const totalSalesPerProduct = await Order.aggregate([
       { $unwind: "$products" },
-      { $group: { _id: "$products.id", totalSales: { $sum: "$products.quantity" } } },
-      { $lookup: { from: "products", localField: "_id", foreignField: "_id", as: "productDetails" } },
-      { $project: { _id: 0, productId: "$_id", label: "$productDetails.name", value: 1 } }
+      {
+        $group: {
+          _id: "$products.id",
+          totalSales: { $sum: "$products.quantity" },
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "productDetails",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          productId: "$_id",
+          label: { $arrayElemAt: ["$productDetails.name", 0] },
+          value: "$totalSales",
+        },
+      },
     ]);
     res.status(200).json({ totalSalesPerProduct });
   } catch (error) {
@@ -132,14 +188,53 @@ exports.calculateTotalSalesPerProduct = async (req, res) => {
   }
 };
 
-exports.getProductStockLevels = async (req, res) => {
+exports.MonthlyIncome = async (req, res) => {
   try {
-    const productStockLevels = await Product.aggregate([
-      { $project: { _id: 0, productId: "$_id", productName: "$name", stock: 1 } }
+    const monthlyIncome = await Order.aggregate([
+      {
+        $match: {
+          orderStatus: "Order Received",
+        },
+      },
+      {
+        $project: {
+          month: { $month: "$createdAt" },
+          year: { $year: "$createdAt" },
+          totalPrice: "$totalPrice",
+        },
+      },
+      {
+        $group: {
+          _id: { month: "$month", year: "$year" },
+          value: { $sum: "$totalPrice" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          label: {
+            $concat: [
+              { $toString: "$_id.month" },
+              " ",
+              { $toString: "$_id.year" },
+            ],
+          },
+          value: 1,
+        },
+      },
+      {
+        $sort: { label: 1 },
+      },
     ]);
-    return productStockLevels;
+
+    monthlyIncome.forEach((entry) => {
+      entry.label = getMonthName(parseInt(entry.label));
+    });
+
+    console.log(monthlyIncome);
+    res.status(200).json({ monthlyIncome });
   } catch (error) {
-    console.error("Error retrieving product stock levels:", error);
+    console.error("Error aggregating monthly income:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
-

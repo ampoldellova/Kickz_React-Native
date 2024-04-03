@@ -131,11 +131,11 @@ export default function AdminNavigator() {
         component={OrderScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Charts"
         component={ChartScreen}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="AdminSingleOrder"
         component={AdminSingleOrder}
