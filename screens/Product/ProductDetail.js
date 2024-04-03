@@ -101,9 +101,12 @@ const ProductDetail = () => {
             .then((res) => {
                 setComment("");
                 setRatings(1);
-                setModalVisible(false);
-                Alert.alert("Updated Review", "Your review is successfully updated!");
-                navigation.navigate("Home");
+                setModalVisible(false); Toast.show({
+                    type: 'success',
+                    text1: 'Edit Review',
+                    text2: 'Your review is edited successfully',
+                });
+                navigation.goBack();
             })
             .catch((error) => console.log(error));
     };

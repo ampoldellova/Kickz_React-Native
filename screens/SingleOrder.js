@@ -18,6 +18,7 @@ import { BottomModal, ModalContent, SlideAnimation } from "react-native-modals";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Rating } from "react-native-ratings";
+import Toast from 'react-native-toast-message';
 
 const SingleOrder = ({ route }) => {
   const navigation = useNavigation();
@@ -71,7 +72,11 @@ const SingleOrder = ({ route }) => {
         setComment("");
         setRating(1);
         setModalVisible(false);
-        Alert.alert("Submitted Review", "Your review is submitted successfully !");
+        Toast.show({
+          type: 'success',
+          text1: 'Submitted Review',
+          text2: 'Your review is submitted successfully!',
+        });
         navigation.goBack();
       })
       .catch((error) => console.log(error));
@@ -95,11 +100,7 @@ const SingleOrder = ({ route }) => {
         <View style={{ backgroundColor: "white", borderRadius: 10, padding: 10 }}>
           <Text style={{ fontSize: 16, fontWeight: "bold" }}>List of items</Text>
           {products.map((product, index) => (
-            <TouchableHighlight
-              key={index}
-              onPress={() => handleProductPress(product)}
-              underlayColor="transparent"
-            >
+            <View key={index}>
               <View style={styles.productContainer}>
                 <Image
                   source={{ uri: product.image }}
@@ -109,9 +110,16 @@ const SingleOrder = ({ route }) => {
                   <Text style={{ marginTop: 20, fontWeight: "bold" }}>{product.name}</Text>
                   <Text style={{ fontStyle: "italic" }}>Price: ${product.price}</Text>
                   <Text style={{ fontStyle: "italic" }}>Quantity: {product.quantity}</Text>
+                  {orderStatus === "Order Received" ? (
+                    <Pressable onPress={() => handleProductPress(product)} style={{ backgroundColor: "#87A922", borderRadius: 30, padding: 5, marginTop: 5 }}>
+                      <Text style={{ color: "white", textAlign: "center", fontWeight: "bold", marginHorizontal: 5 }}>Review Product</Text>
+                    </Pressable>
+                  ) : (
+                    <></>
+                  )}
                 </View>
               </View>
-            </TouchableHighlight>
+            </View>
           ))}
         </View>
 
@@ -134,18 +142,20 @@ const SingleOrder = ({ route }) => {
           <Text style={{ fontWeight: "bold" }}>Total Price: ₱ {totalPrice}</Text>
         </View>
         {orderStatus === "Order Delivered" ? (
-          <View style={styles.updateButton}>
-            <Button
-              title="Update Status to Received"
-              onPress={() => {
-                updateOrderStatus("Order Received");
-                setTimeout(() => {
-                  navigation.navigate("Order");
-                  Alert.alert("Status Updated", "Kindly Check your Order");
-                }, 1000);
-              }}
-            />
-          </View>
+          <Pressable style={{ backgroundColor: "#87A922", padding: 10, borderRadius: 30, marginTop: 10, marginBottom: 20 }}
+            onPress={() => {
+              updateOrderStatus("Order Received");
+              setTimeout(() => {
+                navigation.navigate("Order");
+                Toast.show({
+                  type: 'success',
+                  text1: 'Status Updated',
+                  text2: 'Kindly check your orders',
+                });
+              }, 1000);
+            }}>
+            <Text style={{ color: "white", textAlign: "center", fontWeight: "bold" }}>Receive Order</Text>
+          </Pressable>
         ) : orderStatus === "Processing" ? (
           <View style={styles.updateButton}>
             <Button
@@ -245,10 +255,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 10,
     borderRadius: 10
-  },
-  updateButton: {
-    marginTop: 20,
-    marginHorizontal: 50,
   },
 });
 
