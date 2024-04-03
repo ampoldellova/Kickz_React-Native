@@ -27,6 +27,7 @@ const Products = ({ item }) => {
     };
 
     const cart = useSelector((state) => state.cart.cart);
+    console.log(cart)
 
     return (
         <Pressable style={{ marginHorizontal: 5, marginVertical: 5, borderWidth: 1, borderRadius: 10, padding: 10, borderColor: "black", backgroundColor: "white" }}>
