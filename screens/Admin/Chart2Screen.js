@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-import { BarChart } from "react-native-gifted-charts";
+import { BarChart, PieChart } from "react-native-gifted-charts";
 import baseurl from "../../assets/common/baseurl";
 import axios from "axios";
 
@@ -50,7 +50,7 @@ const Chart2Screen = () => {
     getTotalSales();
   }, []);
   return (
-    <View style={styles.container}>
+    <View style={{ marginTop: 20, width: "100%" }}>
       <Text style={styles.title}>Total Sales Per Product</Text>
       <BarChart
         horizontal
@@ -61,7 +61,7 @@ const Chart2Screen = () => {
         yAxisThickness={0}
         xAxisThickness={0}
       />
-    </View>
+    </View >
   );
 };
 

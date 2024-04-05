@@ -116,7 +116,7 @@ const AddAddress = () => {
                                     marginTop: 7,
                                 }}
                             >
-                                <Pressable
+                                {/* <Pressable
                                     style={{
                                         backgroundColor: "#F5F5F5",
                                         paddingHorizontal: 10,
@@ -140,7 +140,7 @@ const AddAddress = () => {
                                     }}
                                 >
                                     <Text>Remove</Text>
-                                </Pressable>
+                                </Pressable> */}
 
                             </View>
                         </Pressable>

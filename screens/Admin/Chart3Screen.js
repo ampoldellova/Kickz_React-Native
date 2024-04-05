@@ -19,16 +19,16 @@ const Chart3Screen = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-    <Text style={styles.title}>Average Sales Per Product</Text>
-    <LineChart
-      areaChart
-      data={income}
-      startFillColor="rgb(46, 217, 255)"
-      startOpacity={0.8}
-      endFillColor="rgb(203, 241, 250)"
-      endOpacity={0.3}
-    />
+    <View style={{ marginTop: 50, width: "100%" }}>
+      <Text style={styles.title}>Average Sales Per Product</Text>
+      <LineChart
+        areaChart
+        data={income}
+        startFillColor="rgb(46, 217, 255)"
+        startOpacity={0.8}
+        endFillColor="rgb(203, 241, 250)"
+        endOpacity={0.3}
+      />
     </View>
   );
 };

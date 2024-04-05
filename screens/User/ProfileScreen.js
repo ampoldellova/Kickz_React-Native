@@ -144,7 +144,7 @@ const ProfileScreen = () => {
             }}
             style={{
               width: 150,
-              backgroundColor: "#99D5F3",
+              backgroundColor: "#0F0F0F",
               borderRadius: 10,
               padding: 15,
             }}
@@ -152,7 +152,7 @@ const ProfileScreen = () => {
             <Text
               style={{
                 textAlign: "center",
-                color: "#0F0F0F",
+                color: "white",
                 fontSize: 16,
                 fontWeight: "bold",
               }}
