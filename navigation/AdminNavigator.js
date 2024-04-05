@@ -19,7 +19,6 @@ import AddressScreen from "../screens/AddressScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import OrderScreen from "../screens/Admin/Orders/OrderScreen";
 import AdminSingleOrder from "../screens/Admin/Orders/AdminSingleOrder";
-import ChartScreen from "../screens/Admin/ChartScreen";
 
 export default function AdminNavigator() {
   const Stack = createNativeStackNavigator();
@@ -131,11 +130,6 @@ export default function AdminNavigator() {
         component={OrderScreen}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="Charts"
-        component={ChartScreen}
-        options={{ headerShown: false }}
-      /> */}
       <Stack.Screen
         name="AdminSingleOrder"
         component={AdminSingleOrder}

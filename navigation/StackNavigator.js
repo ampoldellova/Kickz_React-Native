@@ -10,30 +10,18 @@ import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ProfileScreen from "../screens/User/ProfileScreen";
 import CartScreen from "../screens/Cart/CartScreen";
-import BrandScreen from "../screens/Admin/Brand/BrandScreen";
-import BrandCreate from "../screens/Admin/Brand/BrandCreate";
 import AddAddress from "../screens/AddAddress";
 import AddressScreen from "../screens/AddressScreen";
-import BrandUpdate from "../screens/Admin/Brand/BrandUpdate";
-import ProductScreen from "../screens/Admin/Product/ProductScreen";
-import ProductCreate from "../screens/Admin/Product/ProductCreate";
-import ProductUpdate from "../screens/Admin/Product/ProductUpdate";
 import ProductDetail from "../screens/Product/ProductDetail";
 import EditProfile from "../screens/User/EditProfile";
 import ConfirmationScreen from "../screens/Cart/ConfirmationScreen";
-import OrderScreen from "../screens/Order/OrderSuccess";
-import UserScreen from "../screens/Admin/Users/UserScreen";
-import UserUpdate from "../screens/Admin/Users/UserUpdate";
 import OrderSuccess from "../screens/Order/OrderSuccess";
 import { useSelector } from "react-redux";
 import Order from "../screens/Order";
 import SingleOrder from "../screens/SingleOrder";
-import { Badge } from "native-base";
-import ChartScreen from "../screens/Admin/ChartScreen";
-// import { Badge } from "react-native-paper";
+import 'react-native-gesture-handler'
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
